@@ -1,7 +1,7 @@
 {
   "name": "hmcs-launcher",
   "productName": "HMCS",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "HMCS - Hallo Minecraft Space",
   "main": "main.js",
   "scripts": {
