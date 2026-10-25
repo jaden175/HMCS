@@ -29,7 +29,7 @@ const DEFAULTS = {
   servers: [],             // 联机页保存的服务器 {name,ip,port,version}
   accounts: [],            // {id,type:'offline'|'msa'|'authlib',name,uuid,accessToken,extra}
   authServerUrl: 'https://littleskin.cn/api/yggdrasil',
-  updateManifestUrl: '',   // 应用内自更新的清单 JSON 地址
+  updateManifestUrl: 'https://jaden175.github.io/HMCS/update.json',   // 应用内自更新的清单 JSON 地址
   javaInstalls: []         // 已下载的 Java 路径
 };
 
