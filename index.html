@@ -227,17 +227,17 @@
       <span class="tag">Modrinth 模组</span>
       <span class="tag">MIT</span>
     </div>
-    <a class="big" id="bigBtn" href="https://github.com/jaden175/HMCS/releases/download/v0.1.0/HMCS-0.1.0-win.zip">
+    <a class="big" id="bigBtn" href="HMCS-0.1.0-win.zip">
       <span class="dl-arrow">⬇</span>
       <span id="bigLabel">下载 Windows 版<small id="bigMeta">HMCS-0.1.0-win.zip · 218 MB</small></span>
     </a>
     <div class="alt">
-      <a href="https://github.com/jaden175/HMCS/releases/download/v0.1.0/HMCS-0.1.0-win.zip">Windows .zip 直链</a>
-      <a href="https://github.com/jaden175/HMCS/releases/download/v0.1.0/HMCS-0.1.0-amd64.deb">Linux .deb 直链</a>
+      <a href="HMCS-0.1.0-win.zip">Windows .zip 直链</a>
+      <a href="HMCS-0.1.0-amd64.deb">Linux .deb 直链</a>
       <a href="https://github.com/jaden175/hmcs/releases" target="_blank" rel="noopener">GitHub Releases</a>
       <a href="https://itch.io" target="_blank" rel="noopener">itch.io 备用通道</a>
     </div>
-    <p class="hint">直链为当前构建产物；GitHub Release 标签发布后会自动同步同一批文件。</p>
+    <p class="hint">直链为当前构建产物；GitHub Release 标签发布后会自动同步同一批文件。<br>⚠️ 启动不了游戏？多半是权限问题，看下方<a href="#faq">常见问题</a>第一条。</p>
   </div>
 
   <div class="picker">
@@ -258,7 +258,7 @@
       </ul>
       <div class="file"><b>HMCS-0.1.0-win.zip</b><span>218 MB</span></div>
       <div class="act">
-        <a class="go" href="https://github.com/jaden175/HMCS/releases/download/v0.1.0/HMCS-0.1.0-win.zip">⬇ 下载便携版 .zip</a>
+        <a class="go" href="HMCS-0.1.0-win.zip">⬇ 下载便携版 .zip</a>
         <a href="https://github.com/jaden175/hmcs/releases" target="_blank" rel="noopener">⬇ 安装包 .exe</a>
       </div>
     </div>
@@ -273,7 +273,7 @@
       </ul>
       <div class="file"><b>HMCS-0.1.0-amd64.deb</b><span>176 MB</span></div>
       <div class="act">
-        <a class="go" href="https://github.com/jaden175/HMCS/releases/download/v0.1.0/HMCS-0.1.0-amd64.deb">⬇ 下载 .deb</a>
+        <a class="go" href="HMCS-0.1.0-amd64.deb">⬇ 下载 .deb</a>
       </div>
     </div>
 
@@ -299,7 +299,7 @@
       </ul>
       <div class="file"><b>HMCS-0.1.0-source.zip</b><span>0.16 MB</span></div>
       <div class="act">
-        <a class="go" href="https://github.com/jaden175/HMCS/releases/download/v0.1.0/HMCS-0.1.0-source.zip">⬇ 下载源码</a>
+        <a class="go" href="HMCS-0.1.0-source.zip">⬇ 下载源码</a>
         <a href="https://github.com/jaden175/hmcs" target="_blank" rel="noopener">GitHub 仓库</a>
       </div>
     </div>
@@ -372,6 +372,12 @@
     <h2 class="h2">常见问题</h2>
     <p class="h2sub">下载与使用中最常被问到的几个问题。</p>
     <details open>
+      <summary>点了开始游戏没反应 / 一直下载不下来？</summary>
+      <p>最常见原因是<b>数据目录权限</b>：如果曾用管理员身份（sudo / 右键"以管理员身份运行"）启动过 HMCS，数据目录属主会变成管理员，之后正常方式启动时 Java 和游戏资源就全部写入失败且可能不报错。</p>
+      <p><b>Linux 修复</b>：终端执行 <code>sudo chown -R $USER ~/.config/HMCS</code>，重新打开启动器即可，会自动补齐缺失的 Java 与资源。</p>
+      <p><b>Windows 修复</b>：不要用管理员身份运行 HMCS。若目录权限已被破坏，用管理员打开 PowerShell 执行 <code>takeown /f "$env:APPDATA\HMCS" /r /d y</code> 和 <code>icacls "$env:APPDATA\HMCS" /grant "$env:USERNAME:(OI)(CI)F" /t</code>，之后正常双击启动。日常使用请始终双击运行，不要选"以管理员身份运行"。</p>
+    </details>
+    <details>
       <summary>Windows 下载后怎么安装？</summary>
       <p>解压 <code>HMCS-0.1.0-win.zip</code>，双击目录内的 <code>install.cmd</code>，脚本会自动复制程序、创建桌面与开始菜单快捷方式并写入卸载信息。也可以直接运行目录里的 <code>hmcs-launcher.exe</code> 免安装使用。</p>
     </details>
@@ -402,7 +408,7 @@
     <a href="https://github.com/jaden175/hmcs/releases" target="_blank" rel="noopener">Releases</a>
     <a href="https://github.com/jaden175/hmcs/issues" target="_blank" rel="noopener">问题反馈</a>
     <a href="https://itch.io" target="_blank" rel="noopener">itch.io</a>
-    <a href="https://jaden175.github.io/hmcs/" target="_blank" rel="noopener">在线主页</a>
+    <a href="https://jaden175.github.io/HMCS/" target="_blank" rel="noopener">在线主页</a>
     <span class="r">Electron · Node.js · 原创实现</span>
   </div>
 </footer>
@@ -411,10 +417,10 @@
   // 平台标签切换 + 主按钮跟随
   (function () {
     var OS = {
-      win:   { href:'https://github.com/jaden175/HMCS/releases/download/v0.1.0/HMCS-0.1.0-win.zip',   label:'下载 Windows 版', meta:'HMCS-0.1.0-win.zip · 218 MB' },
-      linux: { href:'https://github.com/jaden175/HMCS/releases/download/v0.1.0/HMCS-0.1.0-amd64.deb', label:'下载 Linux 版',   meta:'HMCS-0.1.0-amd64.deb · 176 MB' },
+      win:   { href:'HMCS-0.1.0-win.zip',   label:'下载 Windows 版', meta:'HMCS-0.1.0-win.zip · 218 MB' },
+      linux: { href:'HMCS-0.1.0-amd64.deb', label:'下载 Linux 版',   meta:'HMCS-0.1.0-amd64.deb · 176 MB' },
       mac:   { href:'https://github.com/jaden175/hmcs/releases',                                        label:'前往 Releases',    meta:'macOS 版即将推出' },
-      src:   { href:'https://github.com/jaden175/HMCS/releases/download/v0.1.0/HMCS-0.1.0-source.zip',label:'下载源码',       meta:'HMCS-0.1.0-source.zip · 0.16 MB' }
+      src:   { href:'HMCS-0.1.0-source.zip',label:'下载源码',       meta:'HMCS-0.1.0-source.zip · 0.16 MB' }
     };
 
     var tabs = document.querySelectorAll('.tabs button');
