@@ -237,7 +237,7 @@
       <a href="https://github.com/jaden175/hmcs/releases" target="_blank" rel="noopener">GitHub Releases</a>
       <a href="https://itch.io" target="_blank" rel="noopener">itch.io 备用通道</a>
     </div>
-    <p class="hint">直链为当前构建产物；GitHub Release 标签发布后会自动同步同一批文件。</p>
+    <p class="hint">直链为当前构建产物；GitHub Release 标签发布后会自动同步同一批文件。<br>⚠️ 启动不了游戏？多半是权限问题，看下方<a href="#faq">常见问题</a>第一条。</p>
   </div>
 
   <div class="picker">
@@ -372,6 +372,12 @@
     <h2 class="h2">常见问题</h2>
     <p class="h2sub">下载与使用中最常被问到的几个问题。</p>
     <details open>
+      <summary>点了开始游戏没反应 / 一直下载不下来？</summary>
+      <p>最常见原因是<b>数据目录权限</b>：如果曾用管理员身份（sudo / 右键"以管理员身份运行"）启动过 HMCS，数据目录属主会变成管理员，之后正常方式启动时 Java 和游戏资源就全部写入失败且可能不报错。</p>
+      <p><b>Linux 修复</b>：终端执行 <code>sudo chown -R $USER ~/.config/HMCS</code>，重新打开启动器即可，会自动补齐缺失的 Java 与资源。</p>
+      <p><b>Windows 修复</b>：不要用管理员身份运行 HMCS。若目录权限已被破坏，用管理员打开 PowerShell 执行 <code>takeown /f "$env:APPDATA\HMCS" /r /d y</code> 和 <code>icacls "$env:APPDATA\HMCS" /grant "$env:USERNAME:(OI)(CI)F" /t</code>，之后正常双击启动。日常使用请始终双击运行，不要选"以管理员身份运行"。</p>
+    </details>
+    <details>
       <summary>Windows 下载后怎么安装？</summary>
       <p>解压 <code>HMCS-0.1.0-win.zip</code>，双击目录内的 <code>install.cmd</code>，脚本会自动复制程序、创建桌面与开始菜单快捷方式并写入卸载信息。也可以直接运行目录里的 <code>hmcs-launcher.exe</code> 免安装使用。</p>
     </details>
