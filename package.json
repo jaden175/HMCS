@@ -1,0 +1,73 @@
+{
+  "name": "hmcs-launcher",
+  "productName": "HMCS",
+  "version": "0.1.0",
+  "description": "HMCS - Hallo Minecraft Space",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win nsis",
+    "dist:deb": "electron-builder --linux deb",
+    "patch": "node tools/patch-electron-builder.js",
+    "site:sync": "python3 tools/sync-pages.py --all",
+    "site:build": "bash tools/build-site.sh",
+    "site:serve": "bash tools/serve-site.sh --daemon"
+  },
+  "author": {
+    "name": "HMCS",
+    "email": "hmcs@example.com"
+  },
+  "homepage": "https://github.com/hmcs-launcher/HMCS",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "io.hmcs.launcher",
+    "productName": "HMCS",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "signAndEditExecutable": false,
+      "extraFiles": [
+        {
+          "from": "build/install.cmd",
+          "to": "install.cmd"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "deb",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "category": "Game",
+      "artifactName": "HMCS-${version}-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "HMCS-setup-${version}.${ext}"
+    },
+    "squirrelWindows": {
+      "iconUrl": "file:///home/zhangzihe/WorkBuddy/2026-10-23-12-26-56/hmcs/build/icon.ico",
+      "name": "HMCS"
+    }
+  }
+}
