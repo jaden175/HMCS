@@ -164,6 +164,8 @@ async function installVersion(id, onProgress) {
     const objects = Object.values(idx.objects || {});
     const assetRoot = path.join(MC_DIR, 'assets', 'objects');
     let adone = 0;
+    let afail = 0;
+    let afailMsg = '';
     const total = objects.length;
     const areport = () => onProgress && onProgress({ total, done: adone, bytes, phaseExtra: 'assets' });
     await runPool(objects, async (o) => {
@@ -173,10 +175,17 @@ async function installVersion(id, onProgress) {
       try {
         const r = await downloadFile(mirror(url), dest, hash);
         bytes += r.bytes;
-      } catch (e) { /* 个别资源失败不阻塞 */ }
+      } catch (e) {
+        afail++;
+        if (!afailMsg) afailMsg = e.message; /* 个别资源失败不阻塞，但记录原因 */
+      }
       adone++;
       areport();
     }, cfg.maxConcurrency);
+    // 失败过多说明不是个别资源问题，给出明确提示（多为权限/网络问题）
+    if (afail > 0 && afail >= Math.min(50, Math.ceil(total * 0.1))) {
+      throw new Error(`游戏资源下载失败过多（${afail}/${total}）：${afailMsg}。请检查网络或数据目录权限（sudo chown -R $USER ~/.config/HMCS）`);
+    }
   }
 
   return { version: id, files: files.length };
