@@ -1,0 +1,13 @@
+node_modules/
+dist/
+out/
+.npm-cache/
+*.log
+build-log.txt
+build*.log
+builder-debug.yml
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.part
