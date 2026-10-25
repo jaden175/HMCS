@@ -175,8 +175,12 @@ async function ensureJavaForVersion(mcVersion, onLog) {
   if (p) return { path: p, major: need };
   onLog && onLog(`[hmcs] 未找到 Java ${need}，开始自动下载（清华 TUNA 镜像 → Adoptium 官方源，支持断点续传）...`);
   let lastErr;
+  let lastLoggedMB = -1;
   try {
-    const r = await downloadJava(need, onLog ? (prog) => onLog(`[hmcs] Java ${need} 下载中 ${Math.round((prog.bytes || 0) / 1048576)}MB`) : undefined);
+    const r = await downloadJava(need, onLog ? (prog) => {
+      const mb = Math.floor((prog.bytes || 0) / 1048576);
+      if (mb !== lastLoggedMB) { lastLoggedMB = mb; onLog(`[hmcs] Java ${need} 下载中 ${mb}MB...`); }
+    } : undefined);
     onLog && onLog(`[hmcs] Java ${need} 安装完成: ${r.path}`);
     return r;
   } catch (e) {
