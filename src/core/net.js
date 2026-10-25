@@ -106,9 +106,15 @@ async function downloadFile(url, dest, expectedSha1, onBytes) {
         }
 
         if (onBytes) onBytes(start);
+        // 包一层计数流：大文件下载过程中也能实时上报进度
+        let recv = start;
+        const { Transform } = require('stream');
+        const counter = new Transform({
+          transform(chunk, enc, cb) { recv += chunk.length; if (onBytes) onBytes(recv); cb(null, chunk); }
+        });
         const ws = fs.createWriteStream(part, { flags: start > 0 ? 'a' : 'w' });
         if (res.body && typeof res.body.pipe === 'function') {
-          await pipeline(res.body, ws);
+          await pipeline(res.body, counter, ws);
         } else {
           const buf = Buffer.from(await res.arrayBuffer());
           ws.end(buf);
@@ -125,6 +131,9 @@ async function downloadFile(url, dest, expectedSha1, onBytes) {
         return { changed: true, bytes: buf.length };
       } catch (err) {
         lastErr = err;
+        if (/EACCES|EPERM|权限/.test(err.message)) {
+          throw new Error(`无写入权限: ${dest}（数据目录属主不正确，请在终端执行: sudo chown -R $USER ~/.config/HMCS）`);
+        }
         // 断流/超时：保留 .part 以便下次续传，仅在内容损坏时清空
         if (/SHA1/.test(err.message)) fs.rmSync(part, { force: true });
         await new Promise((r) => setTimeout(r, 1000 * (n + 1)));
