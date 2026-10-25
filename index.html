@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>下载 HMCS 启动器</title>
+<meta name="description" content="HMCS 启动器下载页：Windows 便携版 / NSIS 安装包 / Linux deb / 源码包一键下载，支持 Minecraft 26.x、Fabric/Forge、三种登录、Java 自动管理。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3 29 10v12L16 29 3 22V10z' fill='%233fae52'/%3E%3Cpath d='M16 3 29 10 16 17 3 10z' fill='%235fd06f'/%3E%3Cpath d='M3 10 16 17v12L3 22z' fill='%232f8a3e'/%3E%3Cpath d='M29 10 16 17v12l13-7z' fill='%2338994a'/%3E%3C/svg%3E">
+<style>
+  :root{
+    --green:#3fae52;
+    --green-d:#2b7f3a;
+    --green-l:#e9f7ec;
+    --ink:#171b1a;
+    --ink2:#4d5755;
+    --ink3:#8b9694;
+    --bg:#f6f7f5;
+    --card:#fff;
+    --line:#e4e7e2;
+    --dark:#141918;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;line-height:1.7;
+  }
+  a{color:var(--green-d);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .mono{font-family:var(--mono)}
+
+  /* ======== 顶栏 ======== */
+  .top{
+    background:var(--dark);color:#e9eeea;position:sticky;top:0;z-index:60;
+    border-bottom:1px solid #000;
+  }
+  .top .in{
+    max-width:1120px;margin:0 auto;padding:0 22px;height:58px;
+    display:flex;align-items:center;gap:16px;
+  }
+  .brand{display:flex;align-items:center;gap:9px;color:#fff;font-weight:800;letter-spacing:.4px}
+  .brand:hover{text-decoration:none}
+  .brand svg{width:24px;height:24px;display:block}
+  .brand small{
+    font-family:var(--mono);font-size:10.5px;font-weight:500;color:#7e8b87;
+    border:1px solid #2c3533;border-radius:999px;padding:1px 8px;
+  }
+  .top nav{margin-left:auto;display:flex;gap:20px;align-items:center}
+  .top nav a{color:#a9b4b0;font-size:14px}
+  .top nav a:hover{color:#fff;text-decoration:none}
+  .top .gh{
+    border:1px solid #333d3a;color:#e9eeea;border-radius:8px;padding:5px 12px;font-size:13.5px;
+  }
+
+  /* ======== 主下载区 ======== */
+  .main{
+    max-width:1120px;margin:0 auto;padding:0 22px;
+    display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center;
+    min-height:78vh;
+  }
+  .eyebrow{
+    display:inline-block;font-family:var(--mono);font-size:11.5px;letter-spacing:2.5px;
+    text-transform:uppercase;color:var(--green-d);font-weight:700;
+    background:var(--green-l);border:1px solid #cfe9d6;border-radius:999px;padding:4px 12px;
+  }
+  h1{
+    margin:18px 0 14px;font-size:clamp(38px,5.6vw,64px);line-height:1.04;letter-spacing:-2px;font-weight:850;
+  }
+  h1 em{
+    font-style:normal;background:linear-gradient(94deg,var(--green),#8ad894);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .sub{color:var(--ink2);font-size:16.5px;max-width:520px;margin:0 0 26px}
+  .sub b{color:var(--ink)}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+  .tag{
+    font-family:var(--mono);font-size:12px;color:var(--ink2);background:#fff;
+    border:1px solid var(--line);border-radius:7px;padding:4px 10px;
+  }
+
+  /* 大下载按钮 */
+  .big{
+    display:inline-flex;align-items:center;gap:12px;background:var(--green);color:#fff;
+    border:1px solid var(--green);border-radius:12px;padding:15px 26px;
+    font-size:17px;font-weight:700;box-shadow:0 10px 26px rgba(63,174,82,.28);
+    transition:.16s transform,.16s box-shadow,.16s background;
+  }
+  .big:hover{background:var(--green-d);border-color:var(--green-d);text-decoration:none;transform:translateY(-2px);box-shadow:0 14px 32px rgba(63,174,82,.34)}
+  .big .dl-arrow{font-size:20px;line-height:1}
+  .big small{display:block;font-family:var(--mono);font-size:11.5px;font-weight:500;opacity:.86}
+  .alt{margin-top:14px;display:flex;flex-wrap:wrap;gap:10px 18px;font-size:13.5px;color:var(--ink3)}
+  .alt a{color:var(--ink2);text-decoration:underline;text-underline-offset:3px}
+  .hint{margin:16px 0 0;font-size:12.5px;color:var(--ink3);font-family:var(--mono);max-width:520px}
+
+  /* OS 标签卡 */
+  .picker{
+    background:var(--card);border:1px solid var(--line);border-radius:18px;overflow:hidden;
+    box-shadow:0 20px 48px rgba(23,27,26,.08);
+  }
+  .tabs{display:flex;border-bottom:1px solid var(--line);background:#fbfcfa}
+  .tabs button{
+    flex:1;border:0;background:transparent;padding:14px 8px;cursor:pointer;
+    font-family:var(--mono);font-size:12.5px;font-weight:700;letter-spacing:.6px;
+    color:var(--ink3);border-bottom:2px solid transparent;transition:.15s;
+  }
+  .tabs button:hover{color:var(--ink)}
+  .tabs button.on{color:var(--green-d);border-bottom-color:var(--green);background:#fff}
+  .pane{display:none;padding:24px}
+  .pane.on{display:block}
+  .pane h3{margin:0 0 4px;font-size:20px;letter-spacing:-.4px}
+  .pane .ver{font-family:var(--mono);font-size:12px;color:var(--ink3);margin-bottom:14px}
+  .pane ul{margin:0 0 18px;padding-left:18px;color:var(--ink2);font-size:14.5px}
+  .pane li{margin-bottom:5px}
+  .pane code{font-family:var(--mono);font-size:12.5px;background:#f2f4f1;padding:1px 5px;border-radius:4px}
+  .pane .file{
+    font-family:var(--mono);font-size:12.5px;background:#f2f4f1;border:1px solid var(--line);
+    border-radius:8px;padding:8px 10px;margin-bottom:14px;color:var(--ink2);
+    display:flex;justify-content:space-between;gap:10px;
+  }
+  .pane .file b{color:var(--ink);font-weight:600}
+  .pane .act{display:flex;gap:8px;flex-wrap:wrap}
+  .pane .act a{
+    display:inline-flex;align-items:center;gap:6px;border-radius:9px;padding:9px 15px;
+    font-size:14px;font-weight:650;border:1px solid var(--line);background:#fff;color:var(--ink);
+  }
+  .pane .act a:hover{text-decoration:none;transform:translateY(-1px);box-shadow:0 6px 16px rgba(23,27,26,.08)}
+  .pane .act a.go{background:var(--green);border-color:var(--green);color:#fff}
+  .pane .act a.go:hover{background:var(--green-d);border-color:var(--green-d)}
+  .pane .soon{
+    background:#f2f4f1;border:1px dashed var(--line);border-radius:9px;padding:11px 12px;
+    font-size:13.5px;color:var(--ink3);font-family:var(--mono);
+  }
+
+  /* ======== 通用区块 ======== */
+  .band{border-top:1px solid var(--line);background:#fff}
+  .band.alt{background:var(--bg)}
+  .band .in{max-width:1120px;margin:0 auto;padding:52px 22px}
+  .h2{font-size:25px;letter-spacing:-.6px;margin:0 0 6px}
+  .h2sub{color:var(--ink2);margin:0 0 24px;font-size:15px}
+  .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:14px}
+  .c{
+    background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:16px;
+  }
+  .band.alt .c{background:#fff}
+  .c .ic{font-size:19px;margin-bottom:8px;line-height:1}
+  .c h4{margin:0 0 5px;font-size:15px}
+  .c p{margin:0;font-size:13.5px;color:var(--ink2)}
+
+  /* 表格 */
+  table{width:100%;border-collapse:collapse;font-size:14px;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  th{background:#fafbfa;font-weight:700;font-size:13px;color:var(--ink2);text-align:left;padding:10px 14px;border-bottom:1px solid var(--line)}
+  td{padding:11px 14px;border-bottom:1px solid #f0f2ef;vertical-align:top}
+  tr:last-child td{border-bottom:0}
+  td code{font-family:var(--mono);font-size:12.5px;background:#f2f4f1;padding:1px 6px;border-radius:4px}
+
+  /* 步骤 */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+  .s{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px}
+  .band.alt .s{background:#fff}
+  .s .n{
+    width:26px;height:26px;border-radius:7px;background:var(--green-l);color:var(--green-d);
+    border:1px solid #cfe9d6;display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);font-weight:800;font-size:13px;margin-bottom:9px;
+  }
+  .s h4{margin:0 0 5px;font-size:15.5px}
+  .s p{margin:0;font-size:14px;color:var(--ink2)}
+  .s pre{
+    margin:11px 0 0;background:var(--dark);color:#dfe6e2;border-radius:9px;padding:11px 12px;
+    font-family:var(--mono);font-size:12px;overflow-x:auto;
+  }
+
+  /* FAQ */
+  details{background:#fff;border:1px solid var(--line);border-radius:11px;padding:13px 16px;margin-bottom:9px}
+  summary{cursor:pointer;font-weight:700;font-size:14.5px;list-style:none}
+  summary::-webkit-details-marker{display:none}
+  summary::before{content:"▸ ";color:var(--green);font-family:var(--mono)}
+  details[open] summary::before{content:"▾ "}
+  details p{margin:9px 0 0;color:var(--ink2);font-size:14px}
+  details code{font-family:var(--mono);font-size:12.5px;background:#f2f4f1;padding:1px 6px;border-radius:4px}
+
+  footer{border-top:1px solid var(--line);background:var(--dark);color:#8b9694;padding:26px 0}
+  footer .in{max-width:1120px;margin:0 auto;padding:0 22px;display:flex;flex-wrap:wrap;gap:14px;align-items:center;font-size:13.5px}
+  footer a{color:#c2ccc8}
+  footer .r{margin-left:auto;font-family:var(--mono);font-size:12.5px}
+
+  @media (max-width:900px){
+    .main{grid-template-columns:1fr;gap:34px;padding:34px 22px;min-height:auto}
+    .top nav a:not(.gh){display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="in">
+    <a class="brand" href="#top">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M16 3 29 10v12L16 29 3 22V10z" fill="#3fae52"/>
+        <path d="M16 3 29 10 16 17 3 10z" fill="#5fd06f"/>
+        <path d="M3 10 16 17v12L3 22z" fill="#2f8a3e"/>
+        <path d="M29 10 16 17v12l13-7z" fill="#38994a"/>
+      </svg>
+      HMCS <small>Hallo Minecraft Space</small>
+    </a>
+    <nav>
+      <a href="#files">全部文件</a>
+      <a href="#how">使用步骤</a>
+      <a href="#faq">常见问题</a>
+      <a class="gh" href="https://github.com/jaden175/hmcs" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</div>
+
+<div class="main" id="top">
+  <div>
+    <span class="eyebrow">Launcher v0.1.0</span>
+    <h1>下载<br><em>HMCS 启动器</em></h1>
+    <p class="sub">
+      一个<b>干净、克制</b>的 Minecraft 启动器。版本管理、Fabric / Forge、离线 / 微软 / 外置服三种登录、
+      Java 自动匹配下载、模组在线安装 —— 全部内置，<b>解压即用</b>。
+    </p>
+    <div class="tags">
+      <span class="tag">Minecraft 26.1 → 26.4</span>
+      <span class="tag">Java 8/16/17/21/25</span>
+      <span class="tag">Fabric · Forge</span>
+      <span class="tag">Modrinth 模组</span>
+      <span class="tag">MIT</span>
+    </div>
+    <a class="big" id="bigBtn" href="dist/HMCS-0.1.0-win.zip">
+      <span class="dl-arrow">⬇</span>
+      <span id="bigLabel">下载 Windows 版<small id="bigMeta">HMCS-0.1.0-win.zip · 218 MB</small></span>
+    </a>
+    <div class="alt">
+      <a href="dist/HMCS-0.1.0-win.zip">Windows .zip 直链</a>
+      <a href="dist/HMCS-0.1.0-amd64.deb">Linux .deb 直链</a>
+      <a href="https://github.com/jaden175/hmcs/releases" target="_blank" rel="noopener">GitHub Releases</a>
+      <a href="https://itch.io" target="_blank" rel="noopener">itch.io 备用通道</a>
+    </div>
+    <p class="hint">直链为当前构建产物；GitHub Release 标签发布后会自动同步同一批文件。</p>
+  </div>
+
+  <div class="picker">
+    <div class="tabs" role="tablist">
+      <button class="on" data-os="win" role="tab">WINDOWS</button>
+      <button data-os="linux" role="tab">LINUX</button>
+      <button data-os="mac" role="tab">MACOS</button>
+      <button data-os="src" role="tab">源码</button>
+    </div>
+
+    <div class="pane on" data-pane="win">
+      <h3>Windows</h3>
+      <div class="ver">v0.1.0 · Windows 10 / 11 · x64</div>
+      <ul>
+        <li>便携版解压即用，含 <code>install.cmd</code> 一键安装脚本</li>
+        <li>自动创建桌面与开始菜单快捷方式</li>
+        <li>NSIS 安装包支持自定义安装目录</li>
+      </ul>
+      <div class="file"><b>HMCS-0.1.0-win.zip</b><span>218 MB</span></div>
+      <div class="act">
+        <a class="go" href="dist/HMCS-0.1.0-win.zip">⬇ 下载便携版 .zip</a>
+        <a href="https://github.com/jaden175/hmcs/releases" target="_blank" rel="noopener">⬇ 安装包 .exe</a>
+      </div>
+    </div>
+
+    <div class="pane" data-pane="linux">
+      <h3>Linux</h3>
+      <div class="ver">v0.1.0 · Debian / Ubuntu · x64</div>
+      <ul>
+        <li>标准 deb 包，双击安装或 apt 安装</li>
+        <li>自动检测并复用本机 Java</li>
+        <li>缺失 Java 时按版本自动下载</li>
+      </ul>
+      <div class="file"><b>HMCS-0.1.0-amd64.deb</b><span>176 MB</span></div>
+      <div class="act">
+        <a class="go" href="dist/HMCS-0.1.0-amd64.deb">⬇ 下载 .deb</a>
+      </div>
+    </div>
+
+    <div class="pane" data-pane="mac">
+      <h3>macOS</h3>
+      <div class="ver">v0.1.0 · Apple Silicon / Intel</div>
+      <ul>
+        <li>Universal 构建进行中</li>
+        <li>完成后本页与 Releases 同步发布</li>
+        <li>需要 macOS 12 及以上</li>
+      </ul>
+      <div class="soon">即将推出 —— 可先关注 GitHub Releases 获取通知</div>
+      <div class="act" style="margin-top:12px"><a href="https://github.com/jaden175/hmcs/releases" target="_blank" rel="noopener">前往 Releases 页面</a></div>
+    </div>
+
+    <div class="pane" data-pane="src">
+      <h3>源码</h3>
+      <div class="ver">v0.1.0 · MIT License</div>
+      <ul>
+        <li>Node.js 18+ 环境，<code>npm install &amp;&amp; npm start</code> 即可开发</li>
+        <li>无遥测，界面全部本地渲染</li>
+        <li>代码、图标、文案均为原创，未使用 PCL 任何素材</li>
+      </ul>
+      <div class="file"><b>HMCS-0.1.0-source.zip</b><span>0.16 MB</span></div>
+      <div class="act">
+        <a class="go" href="dist/HMCS-0.1.0-source.zip">⬇ 下载源码</a>
+        <a href="https://github.com/jaden175/hmcs" target="_blank" rel="noopener">GitHub 仓库</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="band alt" id="files">
+  <div class="in">
+    <h2 class="h2">全部构建产物</h2>
+    <p class="h2sub">所有文件均由同一份源码构建，版本号与校验信息可在 Releases 页面查看。</p>
+    <table>
+      <tr><th>平台</th><th>文件</th><th>大小</th><th>说明</th></tr>
+      <tr><td>Windows</td><td><code>HMCS-0.1.0-win.zip</code></td><td>218 MB</td><td>便携版，解压后运行 <code>install.cmd</code></td></tr>
+      <tr><td>Windows</td><td><code>HMCS-setup-0.1.0.exe</code></td><td>约 220 MB</td><td>NSIS 安装包，可选安装目录（需在 Windows 上构建）</td></tr>
+      <tr><td>Linux</td><td><code>HMCS-0.1.0-amd64.deb</code></td><td>176 MB</td><td>Debian / Ubuntu 安装包</td></tr>
+      <tr><td>macOS</td><td>—</td><td>—</td><td>Universal 构建中</td></tr>
+      <tr><td>源码</td><td><code>HMCS-0.1.0-source.zip</code></td><td>0.16 MB</td><td>完整源码，MIT License</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="band" id="how">
+  <div class="in">
+    <h2 class="h2">三步跑起来</h2>
+    <p class="h2sub">从下载到进入游戏，只需要三步。</p>
+    <div class="steps">
+      <div class="s">
+        <div class="n">1</div>
+        <h4>下载并解压</h4>
+        <p>Windows 便携版解压到任意目录，无需管理员权限。</p>
+<pre>HMCS-0.1.0-win.zip → 解压 → install.cmd</pre>
+      </div>
+      <div class="s">
+        <div class="n">2</div>
+        <h4>启动并登录</h4>
+        <p>首次启动选择离线账号、微软正版或外置服（内置 LittleSkin 预设）。</p>
+<pre>Java 缺失 → 自动下载匹配版本
+版本不全 → 自动补库</pre>
+      </div>
+      <div class="s">
+        <div class="n">3</div>
+        <h4>开始游戏</h4>
+        <p>选择版本与加载器（Fabric / Forge），点击开始游戏。</p>
+<pre>26.x → Java 25    1.20.5+ → Java 21
+1.18 ~ 1.20.4 → Java 17</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="band alt">
+  <div class="in">
+    <h2 class="h2">内置能力</h2>
+    <p class="h2sub">启动游戏需要的一切，都已经装好。</p>
+    <div class="cols">
+      <div class="c"><div class="ic">🧱</div><h4>版本管理</h4><p>正式 / 快照 / Beta 全量清单，BMCLAPI 镜像 + 官方源双通道，断点续传 + SHA1 校验。</p></div>
+      <div class="c"><div class="ic">⚙️</div><h4>加载器</h4><p>一键安装 Fabric（自动匹配最新 loader）与 Forge（完整 processors 管线）。</p></div>
+      <div class="c"><div class="ic">🔑</div><h4>三种登录</h4><p>离线账号、微软正版 device code、authlib-injector 外置服登录。</p></div>
+      <div class="c"><div class="ic">☕</div><h4>Java 自动管理</h4><p>扫描本机 JRE，缺失时自动下载匹配版本，Adoptium 与清华 TUNA 双源回退。</p></div>
+      <div class="c"><div class="ic">📦</div><h4>模组 / 资源</h4><p>Modrinth 在线搜索安装模组、资源包与光影，按版本和加载器匹配。</p></div>
+      <div class="c"><div class="ic">🌐</div><h4>联机</h4><p>服务器列表、快速进服、局域网指引与本机 IP 显示。</p></div>
+      <div class="c"><div class="ic">🔄</div><h4>应用内更新</h4><p>启动即检查新版本，一键下载替换并重启。</p></div>
+      <div class="c"><div class="ic">🎨</div><h4>极简 UI</h4><p>动态方块背景、大圆形启动按钮、5 套主题色，全部原创实现。</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="band" id="faq">
+  <div class="in">
+    <h2 class="h2">常见问题</h2>
+    <p class="h2sub">下载与使用中最常被问到的几个问题。</p>
+    <details open>
+      <summary>Windows 下载后怎么安装？</summary>
+      <p>解压 <code>HMCS-0.1.0-win.zip</code>，双击目录内的 <code>install.cmd</code>，脚本会自动复制程序、创建桌面与开始菜单快捷方式并写入卸载信息。也可以直接运行目录里的 <code>hmcs-launcher.exe</code> 免安装使用。</p>
+    </details>
+    <details>
+      <summary>下载到一半断了怎么办？</summary>
+      <p>直接重试即可。下载采用流式落盘 + HTTP Range 断点续传，已下载部分会保留并接着下，不会从头再来；完成后还会做 SHA1 校验。</p>
+    </details>
+    <details>
+      <summary>提示缺 Java 或内存过大？</summary>
+      <p>两者都会自动处理：超过物理内存 75% 时自动下调堆内存；缺少 Java 时按版本要求自动下载（Adoptium，失败自动切清华 TUNA 镜像），仍失败则回退使用本机已安装的 Java。</p>
+    </details>
+    <details>
+      <summary>26.x 版本怎么下不到？</summary>
+      <p>启动器按官方清单全量支持，26.1 / 26.2 / 26.3 直接可选；26.4 目前只有快照，正式版发布后会自动出现在列表里，无需更新客户端。</p>
+    </details>
+    <details>
+      <summary>用的是 PCL 的代码吗？</summary>
+      <p>不是。界面只对齐操作习惯，所有代码、图标与文案均为本项目原创实现，未复制 PCL 任何源码或素材。</p>
+    </details>
+  </div>
+</div>
+
+<footer>
+  <div class="in">
+    <span>HMCS · Hallo Minecraft Space</span>
+    <span class="mono">v0.1.0</span>
+    <a href="https://github.com/jaden175/hmcs" target="_blank" rel="noopener">源码</a>
+    <a href="https://github.com/jaden175/hmcs/releases" target="_blank" rel="noopener">Releases</a>
+    <a href="https://github.com/jaden175/hmcs/issues" target="_blank" rel="noopener">问题反馈</a>
+    <a href="https://itch.io" target="_blank" rel="noopener">itch.io</a>
+    <a href="https://jaden175.github.io/hmcs/" target="_blank" rel="noopener">在线主页</a>
+    <span class="r">Electron · Node.js · 原创实现</span>
+  </div>
+</footer>
+
+<script>
+  // 平台标签切换 + 主按钮跟随
+  (function () {
+    var OS = {
+      win:   { href:'dist/HMCS-0.1.0-win.zip',   label:'下载 Windows 版', meta:'HMCS-0.1.0-win.zip · 218 MB' },
+      linux: { href:'dist/HMCS-0.1.0-amd64.deb', label:'下载 Linux 版',   meta:'HMCS-0.1.0-amd64.deb · 176 MB' },
+      mac:   { href:'https://github.com/jaden175/hmcs/releases',                                        label:'前往 Releases',    meta:'macOS 版即将推出' },
+      src:   { href:'dist/HMCS-0.1.0-source.zip',label:'下载源码',       meta:'HMCS-0.1.0-source.zip · 0.16 MB' }
+    };
+
+    var tabs = document.querySelectorAll('.tabs button');
+    var panes = document.querySelectorAll('.pane');
+    var big = document.getElementById('bigBtn');
+    var bigLabel = document.getElementById('bigLabel');
+    var bigMeta = document.getElementById('bigMeta');
+
+    function select(key) {
+      tabs.forEach(function (b) { b.classList.toggle('on', b.getAttribute('data-os') === key); });
+      panes.forEach(function (p) { p.classList.toggle('on', p.getAttribute('data-pane') === key); });
+      var o = OS[key];
+      if (o && big && bigLabel) {
+        big.setAttribute('href', o.href);
+        bigLabel.childNodes[0].nodeValue = o.label;
+        bigMeta.textContent = o.meta;
+      }
+    }
+
+    tabs.forEach(function (b) {
+      b.addEventListener('click', function () { select(b.getAttribute('data-os')); });
+    });
+
+    // 依据访客系统自动定位标签
+    var ua = navigator.userAgent.toLowerCase();
+    var guess = /windows/.test(ua) ? 'win'
+              : /mac os|macintosh/.test(ua) ? 'mac'
+              : /linux|android|x11/.test(ua) ? 'linux'
+              : 'win';
+    select(guess);
+  })();
+</script>
+</body>
+</html>
