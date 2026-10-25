@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="pzhILcHXMkE85Ss2bLclB7">
+<head data-page-node-id="AXEkfUJ1ZdTR6FSBghZu5b">
+  <meta charset="UTF-8" data-page-node-id="ZiXWhVd977w016yw8WZWYq">
+  <title>HMCS - Hallo Minecraft Space</title>
+  <link rel="stylesheet" href="style.css" data-page-node-id="ZmltZ9KQ8jEKphGIGvNtbd">
+</head>
+<body data-page-node-id="fySXUyfBR4Xm1Tc1nygdJA">
+  <!-- 自定义标题栏 -->
+  <div id="titlebar" data-page-node-id="XTLMv31EuwJ3jVjIVFTJNF">
+    <div class="brand" data-page-node-id="8pDNp0qkd0NK4NYCWzFMou">
+      <span class="logo-cube" data-page-node-id="fpqXL0ae4biSitttof8WXy"></span>
+      <span data-page-node-id="n4qsHLw6irTiMnDuZdAVof">HMCS</span>
+      <span class="tagline">Hallo Minecraft Space</span>
+    </div>
+    <div class="theme-dots" id="theme-dots" title="主题色" data-page-node-id="3DP6J4m7dTT0hekVDY72xi"></div>
+    <span class="spacer" data-page-node-id="760ej7vgGPNWFxGlyumHMi"></span>
+    <button class="tb" id="btn-min" data-page-node-id="pTjrU9BnhMEt9aGZEEttBq">—</button>
+    <button class="tb" id="btn-max" data-page-node-id="0WnVNxnwv1b9mmVKKWsRHT">□</button>
+    <button class="tb tb-close" id="btn-close" data-page-node-id="5YXAH2PAiSB04kndfm7WKy">×</button>
+  </div>
+
+  <div id="layout" data-page-node-id="a9G9BleD0oyg67kSCe4aOx">
+    <!-- 侧边导航 -->
+    <nav id="sidebar" data-page-node-id="9JvqoD3tTQZOesutVHi0UH">
+      <button class="nav active" data-page="home" data-page-node-id="OBg7RKJpVRLZgEAYSSwIOe">
+        <svg viewBox="0 0 16 16" data-page-node-id="9IqdWbbU84ElRLnQQ8VFRU"><rect x="3" y="7" width="4" height="4" data-page-node-id="5e8Gy7iV0m9Xcr6LxfMbPk"/><rect x="8" y="3" width="4" height="4" data-page-node-id="a8k1EdQO5AhHAB2f19BbXs"/><rect x="8" y="8" width="4" height="4" data-page-node-id="4XJCDaZncLsXEQTc4Zhzd7"/></svg>
+        <span data-page-node-id="UfPohpO1PuM3L5g8CGCj8A">主页</span>
+      </button>
+      <button class="nav" data-page="versions" data-page-node-id="lgZzZU3lkVbNSZc5YyRPWD">
+        <svg viewBox="0 0 16 16" data-page-node-id="4aEHfGig2AoGZhsKQWZAiK"><path d="M2 3h5v3H2zM9 3h5v3H9zM2 8h5v3H2zM9 8h5v3H9z" data-page-node-id="oHfxBZ1AMHVSvkvh79lDo9"/></svg>
+        <span data-page-node-id="7tem3D8HNJZF4uKCFaHKNC">下载</span>
+      </button>
+      <button class="nav" data-page="mods" data-page-node-id="C3R5p0BMUrMHBNTOYJawP6">
+        <svg viewBox="0 0 16 16" data-page-node-id="Ko7eBJLJHg6clqGQ1baKUV"><rect x="2" y="4" width="12" height="9" rx="1.5" data-page-node-id="Q6vd5rf3BqGtF2yBRTKvER"/><path d="M5 4V2.5h2V4M9 4V2.5h2V4" fill="none" stroke="currentColor" stroke-width="1.4" data-page-node-id="pcCsclOjP8uDDSAQynnuNG"/></svg>
+        <span data-page-node-id="MWPp2nhVmroWURnvyEo7W9">模组</span>
+      </button>
+      <button class="nav" data-page="resources">
+        <svg viewBox="0 0 16 16"><rect x="2" y="2" width="5.5" height="5.5" rx="1"/><rect x="8.5" y="2" width="5.5" height="5.5" rx="1"/><rect x="2" y="8.5" width="5.5" height="5.5" rx="1"/><rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1"/></svg>
+        <span>资源</span>
+      </button>
+      <button class="nav" data-page="multiplayer">
+        <svg viewBox="0 0 16 16"><circle cx="5" cy="5" r="2.2"/><circle cx="11" cy="5" r="2.2"/><path d="M1.5 13c.5-2.5 1.8-3.5 3.5-3.5s3 1 3.5 3.5M7.5 13c.5-2.5 1.8-3.5 3.5-3.5s3 1 3.5 3.5" fill="none" stroke="currentColor" stroke-width="1.4"/></svg>
+        <span>联机</span>
+      </button>
+      <button class="nav" data-page="accounts" data-page-node-id="uv5gKLM8gc4lMDOHVwxdmP">
+        <svg viewBox="0 0 16 16" data-page-node-id="BEaI7eAmQGCevdHHF97QnA"><circle cx="8" cy="5.5" r="2.8" data-page-node-id="CRJUY5WdRD0pK78nfNEhoq"/><path d="M2.5 14c.7-3 3-4.2 5.5-4.2s4.8 1.2 5.5 4.2z" data-page-node-id="mosHTJdJEGviTQ9FT7yDuR"/></svg>
+        <span data-page-node-id="SVBxp8Hr6CZVB4kVXwmAsu">账号</span>
+      </button>
+      <button class="nav" data-page="settings" data-page-node-id="aP1vlVJMm0GqlsNHVnDYmF">
+        <svg viewBox="0 0 16 16" data-page-node-id="cJhyQlylKB8n49p7NQcHIH"><circle cx="8" cy="8" r="2.2" data-page-node-id="aklKd4DSRoGKRPn7H1MpVN"/><path d="M8 1.5v2M8 12.5v2M1.5 8h2M12.5 8h2M3.4 3.4l1.4 1.4M11.2 11.2l1.4 1.4M12.6 3.4l-1.4 1.4M4.8 11.2l-1.4 1.4" stroke="currentColor" stroke-width="1.4" fill="none" data-page-node-id="DmCROk47ipCYLmmY9gjekx"/></svg>
+        <span data-page-node-id="xEUfNwEKFsuPFQNPQUt308">设置</span>
+      </button>
+      <button class="nav" data-page="logs" data-page-node-id="im1lPhZH3mtrLkHJfSSm26">
+        <svg viewBox="0 0 16 16" data-page-node-id="TBhHA7BDJ3tHv18IySUG5R"><path d="M2 3h12M2 6.5h12M2 10h8M2 13.5h5" stroke="currentColor" stroke-width="1.5" fill="none" data-page-node-id="jHhACoZdVQy9DKIquKIJ9V"/></svg>
+        <span data-page-node-id="e5YvP8fFsUETrRW6Ho6lbL">日志</span>
+      </button>
+    </nav>
+
+    <main id="content" data-page-node-id="iTXQhNi1KUC34c4zFl7WCj">
+      <!-- 主页 -->
+      <section class="page active" id="page-home" data-page-node-id="z9ootq9pB6mWAFkMAdHO8L">
+        <div class="blocks-bg" aria-hidden="true" data-page-node-id="ofHcFIQZJRlRhK8MiokumW">
+          <i style="--d:0s;   --x:6%;  --y:14%; --s:26px" data-page-node-id="kaeHBeps6E1Md4KZchkHEs"></i>
+          <i style="--d:1.2s; --x:14%; --y:66%; --s:18px" data-page-node-id="8dEoC3ACnUqaRPZC8Spgk3"></i>
+          <i style="--d:2.4s; --x:24%; --y:32%; --s:34px" data-page-node-id="ZQIDU3nBDQCqQNAs4LA29b"></i>
+          <i style="--d:.6s;  --x:38%; --y:76%; --s:22px" data-page-node-id="XnGrD7nl6a8QWbXIad8j5G"></i>
+          <i style="--d:3.1s; --x:52%; --y:18%; --s:16px" data-page-node-id="eDAIsyD7JcN6hkR9s0NAhl"></i>
+          <i style="--d:1.8s; --x:66%; --y:60%; --s:30px" data-page-node-id="xokQpikFpE880gVHZUPjCG"></i>
+          <i style="--d:.9s;  --x:78%; --y:28%; --s:20px" data-page-node-id="aBGVZ895RvhaQsHyZYi8hF"></i>
+          <i style="--d:2.8s; --x:88%; --y:72%; --s:26px" data-page-node-id="xLVICgoBdagr1AJ9Nwhdee"></i>
+          <i style="--d:3.6s; --x:44%; --y:8%;  --s:14px" data-page-node-id="d05SMwtYnflwGCbloaHWHC"></i>
+          <i style="--d:2s;   --x:92%; --y:44%; --s:18px" data-page-node-id="Hyp2F31baeucbUnMKsocpo"></i>
+        </div>
+
+        <div class="home-center" data-page-node-id="NhosMOIbdQOuCdfBTr3kab">
+          <div class="version-pill" id="pill-version" title="点击选择版本" data-page-node-id="R7tL7dRiw17AywNYdAGdHE">
+            <span class="vp-dot" data-page-node-id="4P3B5cVBRMNJoFVTqoEgju"></span>
+            <span id="home-version" data-page-node-id="m2Z1PFROVLsHP45WBo0sck">未选择版本</span>
+          </div>
+
+          <button id="btn-launch" title="启动游戏" data-page-node-id="xSQBis814EFGFaMShr4F5s">
+            <svg id="launch-ring" viewBox="0 0 100 100" data-page-node-id="KzXtCmU9d8yCdkoP1QSNFb"><circle class="ring-bg" cx="50" cy="50" r="46" data-page-node-id="by5jvbso49Ve7ZODSe3fnF"/><circle class="ring-fg" id="ring-fg" cx="50" cy="50" r="46" data-page-node-id="16tApPehoMpqL1NocRVCjz"/></svg>
+            <svg class="play-icon" viewBox="0 0 24 24" data-page-node-id="jHM8jNnD9tAIXdD4TYkEQ6"><path d="M8 5l11 7-11 7z" data-page-node-id="dDGY45oU2DcnY1bWOAkpbM"/></svg>
+          </button>
+
+          <div class="account-chip" id="chip-account" data-page-node-id="bfAD6JWv2RzAUsDlpfAaIC">
+            <svg viewBox="0 0 16 16" data-page-node-id="jeQv6EjPp6G3dQIn6hR5BK"><circle cx="8" cy="5.5" r="2.8" data-page-node-id="sRkM2Pe9txsCFrH8ow3ELE"/><path d="M2.5 14c.7-3 3-4.2 5.5-4.2s4.8 1.2 5.5 4.2z" data-page-node-id="oM1z14r0dAwJBnQRY0pN8O"/></svg>
+            <span id="home-account" data-page-node-id="ZHjDVnSeiAuGwX7MK5Kj9C">未登录</span>
+          </div>
+
+          <div id="progress-wrap" class="hidden" data-page-node-id="UHkFfTYiOb99SIuN3KDvTT">
+            <div id="progress-text" data-page-node-id="Id1yW7qzy5Wa4RemPB57Yo"></div>
+            <div id="progress-bar" data-page-node-id="ATcTSVBgxRQawWJAYmRRB4"><div id="progress-fill" data-page-node-id="VEdtELpYJ4f1mxKrOZihsM"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 下载页 -->
+      <section class="page" id="page-versions" data-page-node-id="ca5efyYBYUUnHZsXM0dTB5">
+        <div class="page-head" data-page-node-id="UMdS7EozWfEJspKd4wTcq3">
+          <h2 data-page-node-id="N9eCUUxLvx3vwnFADwQi3b">下载新版本</h2>
+          <div class="row" data-page-node-id="YLFAuJL9Thf52YE5irBDRZ">
+            <div class="seg" id="ver-type" data-page-node-id="EPll8suGxtlYdiOtOG5izx">
+              <button class="seg-btn active" data-v="release" data-page-node-id="lxeCLL4GOoLlewQjmV4BH9">正式版</button>
+              <button class="seg-btn" data-v="snapshot" data-page-node-id="7Izl3mDdwMQMHtk5jIXuao">快照</button>
+              <button class="seg-btn" data-v="old_beta" data-page-node-id="dDussBNsziX2KGr0EgzXQI">Beta</button>
+              <button class="seg-btn" data-v="old_alpha" data-page-node-id="QfxHHNGLXvcad1FmKmpdAf">Alpha</button>
+              <button class="seg-btn" data-v="installed" data-page-node-id="uhvq5tIyGXAxqZiRh9E9JY">已安装</button>
+            </div>
+            <input id="ver-search" placeholder="搜索版本…" data-page-node-id="RZFT4GaerUQgCw45zniwVo">
+            <button class="ghost" id="btn-refresh-remote" data-page-node-id="oJuHxaKC0SA6FyL3s5rE2Q">刷新</button>
+          </div>
+        </div>
+        <ul id="version-list" class="list cards" data-page-node-id="ZfUX7uuuLrZNREJ6cYpV1W"></ul>
+        <div class="card loader-box" data-page-node-id="EB2IjJWi0m4fW1GOQF29q1">
+          <h3 data-page-node-id="93By5vhJ6IDEnIm8Muz8BA">安装加载器</h3>
+          <div class="row" data-page-node-id="YjOQFRUT8hF6equu7A4oEc">
+            <select id="loader-mc" data-page-node-id="tfs6HHjGOt4pPDXIBVH8Be"></select>
+            <button id="btn-fabric" data-page-node-id="5M1bX0QiPztGRY7CaEa4Bo">安装 Fabric（最新）</button>
+            <button id="btn-forge" data-page-node-id="CAhi7z0JmpwECHT4zn1w6v">Forge…</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 模组页 -->
+      <section class="page" id="page-mods" data-page-node-id="C6JUNT0PcUVe2stZGxLd9F">
+        <div class="page-head" data-page-node-id="3cyTuqukBMF6a9qJ6Qw5Tb">
+          <h2 data-page-node-id="5u186v69rKh5MdZDI73KT2">模组管理</h2>
+          <div class="row" data-page-node-id="7ejIi6nMe3GmrKA0iuyqc6">
+            <select id="mods-version" data-page-node-id="m44v5Vly8TUmIPQN9IKC04"></select>
+            <button class="ghost" id="btn-open-mods" data-page-node-id="AXvAkxD0nhXVCs4A34nzBD">打开 mods 文件夹</button>
+            <button class="ghost" id="btn-import-mods">导入本地 jar</button>
+          </div>
+          <div id="mods-dir" class="dim small-text" data-page-node-id="9XS69Mj9ZALkl0SZmQFoIC"></div>
+        </div>
+
+        <div class="card">
+          <h3>在线安装模组（Modrinth）</h3>
+          <div class="row">
+            <input id="mod-search" placeholder="搜索模组，如：sodium / JEI / create…" style="flex:1;min-width:200px">
+            <select id="mod-loader">
+              <option value="any">任意加载器</option>
+              <option value="fabric">Fabric</option>
+              <option value="forge">Forge</option>
+              <option value="neoforge">NeoForge</option>
+            </select>
+            <button id="btn-mod-search">搜索</button>
+          </div>
+          <div class="seg" id="mod-cats" style="margin:10px 0 4px;flex-wrap:wrap">
+            <button data-cat="" class="active">热门</button>
+            <button data-cat="optimization">优化</button>
+            <button data-cat="technology">科技</button>
+            <button data-cat="magic">魔法</button>
+            <button data-cat="adventure">冒险</button>
+            <button data-cat="decoration">装饰</button>
+            <button data-cat="utility">工具</button>
+            <button data-cat="storage">存储</button>
+            <button data-cat="food">食物</button>
+            <button data-cat="worldgen">世界生成</button>
+          </div>
+          <div id="mod-cat-hint" class="dim small-text">热门模组 · 按下载量排序</div>
+          <ul id="mod-results" class="list cards"></ul>
+        </div>
+
+        <h3 class="section-label">已安装的模组</h3>
+        <ul id="mods-list" class="list cards" data-page-node-id="G8jMK8PFhEDAB2HX4yt5nb"></ul>
+      </section>
+
+      <!-- 资源页：资源包 / 光影 / 世界 -->
+      <section class="page" id="page-resources">
+        <div class="page-head">
+          <h2>资源管理</h2>
+          <div class="seg" id="res-type">
+            <button class="seg-btn active" data-kind="resourcepacks">资源包</button>
+            <button class="seg-btn" data-kind="shaderpacks">光影</button>
+            <button class="seg-btn" data-kind="saves">世界</button>
+          </div>
+          <div class="row">
+            <select id="res-version"></select>
+            <button class="ghost" id="btn-open-res">打开文件夹</button>
+            <button class="ghost" id="btn-import-res">导入本地 zip</button>
+          </div>
+          <div id="res-dir" class="dim small-text"></div>
+        </div>
+
+        <div class="card" id="res-online-card">
+          <h3>在线获取（Modrinth）</h3>
+          <div class="row">
+            <input id="res-search" placeholder="搜索资源包/光影…" style="flex:1;min-width:200px">
+            <button id="btn-res-search">搜索</button>
+          </div>
+          <ul id="res-results" class="list cards"></ul>
+        </div>
+
+        <h3 class="section-label">本地文件</h3>
+        <ul id="res-list" class="list cards"></ul>
+      </section>
+
+      <!-- 联机页 -->
+      <section class="page" id="page-multiplayer">
+        <div class="page-head"><h2>联机</h2></div>
+        <div class="card">
+          <h3>快速进服（启动后直接连接）</h3>
+          <div class="row">
+            <input id="mp-ip" placeholder="服务器地址，如 mc.example.com" style="flex:1;min-width:180px">
+            <input id="mp-port" type="number" placeholder="端口" value="25565" style="width:110px">
+            <select id="mp-version"></select>
+            <button id="btn-mp-launch">启动并连接</button>
+          </div>
+          <div class="dim small-text">需要 1.20+ 版本；旧版本启动后请在游戏内「多人游戏」手动添加。</div>
+        </div>
+        <div class="card">
+          <h3>保存的服务器（点击快速启动）</h3>
+          <ul id="mp-list" class="list cards"></ul>
+        </div>
+        <div class="card">
+          <h3>局域网联机</h3>
+          <div class="dim small-text">
+            1. 进入单人世界 → Esc → 「对局域网开放」<br>
+            2. 游戏会显示一个端口，把「本机IP:端口」发给同一网络的好友<br>
+            3. 好友在「多人游戏」→「直接连接」输入即可
+          </div>
+          <div class="row"><span id="mp-local-ip" class="tag"></span></div>
+        </div>
+      </section>
+
+      <!-- 账号页 -->
+      <section class="page" id="page-accounts" data-page-node-id="9XCVaZTssReAauxw05BYtg">
+        <div class="page-head" data-page-node-id="8ZeFzd8dlCtqEQWKJKE3gA"><h2 data-page-node-id="OLvDjsdrI3fItgsDbwd4R2">账号</h2></div>
+        <div class="card-grid" data-page-node-id="p6WYVQHFRMe4FyrGcGbct0">
+          <div class="card" data-page-node-id="rBdDW5k8m7sQUgAsUFRubw">
+            <h3 data-page-node-id="hctZyXrPtSupo7fdyFdOzI">离线登录</h3>
+            <div class="row" data-page-node-id="UykavtpF8zmwoCXgcBbkLN">
+              <input id="off-name" placeholder="游戏用户名" data-page-node-id="EA4O0i6jX4J9HeRXBn8bhG">
+              <button id="btn-off-login" data-page-node-id="MqtVt0TOunzSCpdaARmVn8">添加</button>
+            </div>
+          </div>
+          <div class="card" data-page-node-id="8MnuwQQRqIhMcT7om5BXPQ">
+            <h3 data-page-node-id="UNKzR6gEoTEWnLDNte1VcF">外置登录（authlib-injector）</h3>
+            <div class="row" data-page-node-id="hzuR443PVdPwUMk5NeBB9s">
+              <select id="auth-server" data-page-node-id="t1fML7Ui5sO8SC3pQYxMIU">
+                <option value="https://littleskin.cn/api/yggdrasil" data-page-node-id="TxacRrfGkUzD8tcUr7Phci">LittleSkin</option>
+                <option value="custom" data-page-node-id="iHWjEvmYdNetaeqjYqi2XB">自定义…</option>
+              </select>
+            </div>
+            <div class="row" data-page-node-id="sUxnruyrwDoNNisd4c0QaS">
+              <input id="auth-user" placeholder="邮箱/用户名" data-page-node-id="EUsyh8HX8uI7javD8PoOds">
+              <input id="auth-pass" type="password" placeholder="密码" data-page-node-id="a0NDlUDKRlywxq3QI2UlN0">
+              <button id="btn-auth-login" data-page-node-id="mWktD56wQODDyvzFwAm4hC">登录</button>
+            </div>
+          </div>
+          <div class="card" data-page-node-id="CqRzjoVNhYBGNev3Yq9y52">
+            <h3 data-page-node-id="gAvwEPHZNxGxBihEKpeS1l">微软正版</h3>
+            <div class="row" data-page-node-id="oHZj158bTicS3Xs8rMATR8">
+              <button id="btn-msa-login" data-page-node-id="vD7ltymP47R5uWDvEGcs64">获取设备码登录</button>
+              <span id="msa-status" class="dim" data-page-node-id="e7tJqfDOqRJk3QtarDw32m"></span>
+            </div>
+          </div>
+          <div class="card">
+            <h3>皮肤</h3>
+            <div class="dim small-text">
+              <b>离线账号</b>：游戏内没有档案，皮肤需要外置登录 —— 去 littleskin.cn 注册并上传皮肤，再用上方「外置登录」登录 LittleSkin（进支持 authlib 的服务器时生效）。<br>
+              <b>微软正版</b>：登录后直接在 minecraft.net 换。
+            </div>
+            <div class="row"><button class="ghost" id="btn-littleskin">打开 LittleSkin</button></div>
+          </div>
+        </div>
+        <h3 class="section-label" data-page-node-id="p5UUnGYBGo8ahMAKCTrmzH">已保存的账号（点击切换，右键删除）</h3>
+        <ul id="account-list" class="list cards" data-page-node-id="iAB1GcXQlyTndQeGBSQz2Z"></ul>
+      </section>
+
+      <!-- 设置页 -->
+      <section class="page" id="page-settings" data-page-node-id="62uy6kKiu7nR1KmYGwAPWH">
+        <div class="page-head" data-page-node-id="kB4lKCzdXt0mL1SBw3N9Ur"><h2 data-page-node-id="NFMDLGIGTSOERXYtbCy5C0">设置</h2></div>
+        <div class="card-grid" data-page-node-id="XWdsFqwcyROFsenbiEi3cN">
+          <div class="card" data-page-node-id="IWVZbGXrPZfc32jJTyZVDz">
+            <h3 data-page-node-id="4lunjHHQGbrG4uHXoMHdE5">下载源</h3>
+            <div class="row" data-page-node-id="EirbCfwBDwDSJsKV2fwCOA">
+              <select id="set-source" data-page-node-id="0F7sLG5lFj7NwFy2kBPVLC">
+                <option value="bmclapi" data-page-node-id="SUr2EWiaQwx3yrHv9cxQDB">BMCLAPI（国内镜像，推荐）</option>
+                <option value="mojang" data-page-node-id="VMOt9eGOfZFXnGh0ED60Yk">Mojang 官方</option>
+              </select>
+            </div>
+          </div>
+          <div class="card" data-page-node-id="AelYExPieqveP7GhSvBew6">
+            <h3 data-page-node-id="q5aegytANA51OQWHKFKqlh">内存</h3>
+            <div class="row" data-page-node-id="z3Q09cly69XDIH5Fc0b5mY">
+              <label data-page-node-id="qjYLNg8buv7e2OYZmLXfRq">最大分配 <input id="set-maxmem" type="number" min="1024" step="512" data-page-node-id="aU1GvWFVGesFPg9akeDsli"> MB</label>
+            </div>
+          </div>
+          <div class="card" data-page-node-id="lkwoKpcy62brl4ilYLZhfi">
+            <h3 data-page-node-id="Ww8iqVCDMwpBRXMOghjMgy">主题色</h3>
+            <div class="row" id="theme-picker" data-page-node-id="CcKtbZGgohXIKGOoswoTTG"></div>
+          </div>
+          <div class="card" id="update-card">
+            <h3>软件更新</h3>
+            <div id="update-status" class="dim small-text" style="margin-bottom:8px"></div>
+            <div class="row">
+              <input id="set-update-url" placeholder="更新清单地址（JSON：version + asarUrl）" style="flex:1;min-width:180px">
+              <button id="btn-check-update">检查更新</button>
+            </div>
+            <div class="row" style="margin-top:8px">
+              <button class="ghost" id="btn-local-update">从本地更新包更新（app.asar）</button>
+            </div>
+          </div>
+          <div class="card" data-page-node-id="bhQKLpqolCChOMqAWjvy4j">
+            <h3 data-page-node-id="EgU0IHxkzgGql7pGZcCrQ9">Java</h3>
+            <ul id="java-list" class="list small cards" data-page-node-id="7I4HheThZloxM4XRnSmlwo"></ul>
+            <div class="row" data-page-node-id="CEnXCKXLDr3M8jLaWfkViq">
+              <select id="java-major" data-page-node-id="iwtN590aNaHPH5IaDj01VZ">
+                <option value="8" data-page-node-id="F1veTtoqxgSKOTen0MbM9m">Java 8</option>
+                <option value="17" data-page-node-id="EBnalrEcyU33PnIwE48FxH">Java 17</option>
+                <option value="21" data-page-node-id="rLUa7fVXL8OlGiizmu8LoH">Java 21</option>
+                <option value="25">Java 25（26.x 需要）</option>
+              </select>
+              <button id="btn-java-dl" data-page-node-id="5DDBScJsVgg7CjuAJfD1fe">自动下载 JRE</button>
+            </div>
+          </div>
+          <div class="card" data-page-node-id="HJHz9KoK6Ak2NzkVqJI5QK">
+            <h3 data-page-node-id="q33HeWiB6yNKJZIyygEg3y">微软登录 Client ID</h3>
+            <div class="row" data-page-node-id="Si12Omj1L18v4bFMGg9liV">
+              <input id="set-msaid" placeholder="Azure 应用 Client ID（正版登录用）" data-page-node-id="gfDFDxDP2G2LTQPQzLSM7a">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 日志页 -->
+      <section class="page" id="page-logs" data-page-node-id="NSovEbYUHk2w1SK1TqV5pa">
+        <div class="page-head" data-page-node-id="RO1NqvLFDFAEtLF6XxnZN0">
+          <h2 data-page-node-id="Amn7RF4UhhM1hxGUrkKYIm">日志</h2>
+          <button class="ghost" id="btn-clear-log" data-page-node-id="pglZKcJy5yo8bQOEM9eWsu">清空</button>
+        </div>
+        <pre id="log-box" data-page-node-id="FQufGMhsTXK0GSZKdHX676"></pre>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="hidden" data-page-node-id="9qQE9CXi0rxQ9glCrYYYcy"></div>
+  <script src="app.js"></script>
+</body>
+</html>
