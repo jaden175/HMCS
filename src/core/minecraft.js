@@ -253,6 +253,14 @@ async function launchGame(versionId, { onLog, onProgress, serverIp, serverPort }
     mainJar = path.join(versionsDir(), vanillaId, `${vanillaId}.jar`);
   }
 
+  // 首次启动预设：游戏目录没有 options.txt 时写入默认中文，避免每次都是英文
+  const optionsFile = path.join(gameDir, 'options.txt');
+  if (!fs.existsSync(optionsFile)) {
+    try {
+      fs.writeFileSync(optionsFile, 'lang:zh_cn\n');
+    } catch (e) { /* 写不了不影响启动 */ }
+  }
+
   // 资源自检：index 对象缺失过多时自动补齐（历史权限问题/中断会留下残缺资源目录）
   try {
     const aiId = version.assetIndex?.id || version.assets || 'legacy';
