@@ -253,6 +253,25 @@ async function launchGame(versionId, { onLog, onProgress, serverIp, serverPort }
     mainJar = path.join(versionsDir(), vanillaId, `${vanillaId}.jar`);
   }
 
+  // 资源自检：index 对象缺失过多时自动补齐（历史权限问题/中断会留下残缺资源目录）
+  try {
+    const aiId = version.assetIndex?.id || version.assets || 'legacy';
+    const aiPath2 = path.join(MC_DIR, 'assets', 'indexes', `${aiId}.json`);
+    if (fs.existsSync(aiPath2)) {
+      const objs = Object.values(JSON.parse(fs.readFileSync(aiPath2, 'utf8')).objects || {});
+      const missing = objs.filter((o) => !fs.existsSync(path.join(MC_DIR, 'assets', 'objects', o.hash.slice(0, 2), o.hash)));
+      if (missing.length > Math.max(10, Math.floor(objs.length * 0.01))) {
+        onLog && onLog(`[hmcs] 检测到游戏资源缺失 ${missing.length}/${objs.length} 个，自动补全中...`);
+        await installVersion(vanillaId, (p) => {
+          if (p.phaseExtra === 'assets' && p.done % 200 === 0) onLog && onLog(`[hmcs] 资源补全 ${p.done}/${p.total}`);
+        });
+        onLog && onLog('[hmcs] 资源补全完成');
+      }
+    }
+  } catch (e) {
+    onLog && onLog(`[hmcs] 资源自检跳过（${e.message}）`);
+  }
+
   // Java（缺失时自动下载；失败给出明确提示）
   let javaInfo;
   try {
