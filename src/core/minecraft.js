@@ -330,17 +330,7 @@ async function launchGame(versionId, { onLog, onProgress, serverIp, serverPort }
   const assetsIndex = version.assets || 'legacy';
   const assetsDir = path.join(MC_DIR, 'assets');
 
-  let jvmParts;
-  if (isArgsV2) {
-    jvmParts = [...(version.arguments.jvm || [])];
-  } else {
-    jvmParts = [
-      '-Djava.library.path=' + nativesDir,
-      '-cp', classpath.join(path.delimiter)
-    ];
-  }
-
-  const subst = (s) => s
+  const subst = (s) => String(s)
     .replace(/\$\{natives_directory\}/g, nativesDir)
     .replace(/\$\{launcher_name\}/g, 'HMCS')
     .replace(/\$\{launcher_version\}/g, '0.1.0')
@@ -350,7 +340,26 @@ async function launchGame(versionId, { onLog, onProgress, serverIp, serverPort }
     .replace(/\$\{version_name\}/g, versionId)
     .replace(/\$\{libraries\}/g, classpath.slice(0, -1).join(path.delimiter));
 
-  jvmParts = jvmParts.map(subst);
+  // arguments.jvm 里混有 { rules, value } 对象（按 OS / 特性开关），
+  // 需先按规则过滤，再把 value（字符串或数组）展开为字符串
+  const expandJvmArgs = (entries) => (entries || []).flatMap((a) => {
+    if (typeof a === 'string') return [subst(a)];
+    if (!a || typeof a !== 'object') return [];
+    const rules = a.rules || [];
+    // 含 features 规则的条目默认跳过（demo / 自定义分辨率等未启用特性）
+    if (rules.some((r) => r.features)) return [];
+    if (rules.length && !rulesAllow(rules)) return [];
+    const v = a.value;
+    return Array.isArray(v) ? v.map(subst) : [subst(v)];
+  });
+
+  let jvmParts;
+  if (isArgsV2) {
+    jvmParts = [...(version.arguments.jvm || [])];
+  } else {
+    jvmParts = ['-Djava.library.path=' + nativesDir, '-cp', classpath.join(path.delimiter)];
+  }
+  jvmParts = expandJvmArgs(jvmParts);
   const jvmExtra = [memMin, memMax, '-Dfile.encoding=UTF-8'];
 
   // authlib-injector（正确格式：-javaagent:<jar>=<yggdrasil api url>）
@@ -362,11 +371,10 @@ async function launchGame(versionId, { onLog, onProgress, serverIp, serverPort }
   // game 参数
   let gameParts;
   if (isArgsV2) {
-    gameParts = [...(version.arguments.game || [])];
+    gameParts = expandJvmArgs(version.arguments.game);
   } else {
     gameParts = (version.minecraftArguments || '').split(' ');
   }
-  gameParts = gameParts.map(subst);
 
   const gameVals = {
     '--username': auth.name,
