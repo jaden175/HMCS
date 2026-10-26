@@ -1,6 +1,6 @@
 {
-  "version": "0.1.1",
-  "asarUrl": "https://github.com/jaden175/hmcs/releases/download/v0.1.1/app.asar",
-  "sha256": "90e1641fb3d3646654bac1544dcc08e91f9749bd9dc41ca3499196f2d2afafe9",
-  "notes": "HMCS 0.1.1 · 下载实时进度 / 权限错误明确提示 / 资源失败原因报告"
+  "version": "0.1.2",
+  "asarUrl": "https://github.com/jaden175/hmcs/releases/download/v0.1.2/app.asar",
+  "sha256": "858f98ed1df41fb2bd197278208cb2fb0157f88f9d42fb41ff1fc496fef7fff1",
+  "notes": "HMCS 0.1.2 · 修复 26.x 启动崩溃；实时下载进度；权限错误明确提示"
 }
