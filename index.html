@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>下载 HMCS 启动器</title>
-<meta name="description" content="HMCS 启动器下载页：Windows 便携版 / NSIS 安装包 / Linux deb / 源码包一键下载，支持 Minecraft 26.x、Fabric/Forge、三种登录、Java 自动管理。">
+<meta name="description" content="HMCS 启动器下载页：Windows 便携版 / NSIS 安装包 / Linux deb / macOS x64 / 源码包一键下载，支持 Minecraft 26.x、Fabric/Forge、三种登录、Java 自动管理。">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3 29 10v12L16 29 3 22V10z' fill='%233fae52'/%3E%3Cpath d='M16 3 29 10 16 17 3 10z' fill='%235fd06f'/%3E%3Cpath d='M3 10 16 17v12L3 22z' fill='%232f8a3e'/%3E%3Cpath d='M29 10 16 17v12l13-7z' fill='%2338994a'/%3E%3C/svg%3E">
 <style>
   :root{
@@ -214,7 +214,7 @@
 
 <div class="main" id="top">
   <div>
-    <span class="eyebrow">Launcher v0.1.1</span>
+    <span class="eyebrow">Launcher v0.1.2</span>
     <h1>下载<br><em>HMCS 启动器</em></h1>
     <p class="sub">
       一个<b>干净、克制</b>的 Minecraft 启动器。版本管理、Fabric / Forge、离线 / 微软 / 外置服三种登录、
@@ -227,13 +227,14 @@
       <span class="tag">Modrinth 模组</span>
       <span class="tag">MIT</span>
     </div>
-    <a class="big" id="bigBtn" href="dist/HMCS-0.1.1-win.zip">
+    <a class="big" id="bigBtn" href="dist/HMCS-0.1.2-win.zip">
       <span class="dl-arrow">⬇</span>
-      <span id="bigLabel">下载 Windows 版<small id="bigMeta">HMCS-0.1.1-win.zip · 219 MB</small></span>
+      <span id="bigLabel">下载 Windows 版<small id="bigMeta">HMCS-0.1.2-win.zip · 219 MB</small></span>
     </a>
     <div class="alt">
-      <a href="dist/HMCS-0.1.1-win.zip">Windows .zip 直链</a>
-      <a href="dist/HMCS-0.1.1-amd64.deb">Linux .deb 直链</a>
+      <a href="dist/HMCS-0.1.2-win.zip">Windows .zip 直链</a>
+      <a href="dist/HMCS-0.1.2-amd64.deb">Linux .deb 直链</a>
+      <a href="https://github.com/jaden175/HMCS/releases/download/v0.1.2/HMCS-0.1.2-mac-x64.zip">macOS .zip 直链</a>
       <a href="https://github.com/jaden175/hmcs/releases" target="_blank" rel="noopener">GitHub Releases</a>
       <a href="https://itch.io" target="_blank" rel="noopener">itch.io 备用通道</a>
     </div>
@@ -250,56 +251,59 @@
 
     <div class="pane on" data-pane="win">
       <h3>Windows</h3>
-      <div class="ver">v0.1.1 · Windows 10 / 11 · x64</div>
+      <div class="ver">v0.1.2 · Windows 10 / 11 · x64</div>
       <ul>
         <li>便携版解压即用，含 <code>install.cmd</code> 一键安装脚本</li>
         <li>自动创建桌面与开始菜单快捷方式</li>
         <li>NSIS 安装包支持自定义安装目录</li>
       </ul>
-      <div class="file"><b>HMCS-0.1.1-win.zip</b><span>219 MB</span></div>
+      <div class="file"><b>HMCS-0.1.2-win.zip</b><span>219 MB</span></div>
       <div class="act">
-        <a class="go" href="dist/HMCS-0.1.1-win.zip">⬇ 下载便携版 .zip</a>
+        <a class="go" href="dist/HMCS-0.1.2-win.zip">⬇ 下载便携版 .zip</a>
         <a href="https://github.com/jaden175/hmcs/releases" target="_blank" rel="noopener">⬇ 安装包 .exe</a>
       </div>
     </div>
 
     <div class="pane" data-pane="linux">
       <h3>Linux</h3>
-      <div class="ver">v0.1.1 · Debian / Ubuntu · x64</div>
+      <div class="ver">v0.1.2 · Debian / Ubuntu · x64</div>
       <ul>
         <li>标准 deb 包，双击安装或 apt 安装</li>
         <li>自动检测并复用本机 Java</li>
         <li>缺失 Java 时按版本自动下载</li>
       </ul>
-      <div class="file"><b>HMCS-0.1.1-amd64.deb</b><span>176 MB</span></div>
+      <div class="file"><b>HMCS-0.1.2-amd64.deb</b><span>176 MB</span></div>
       <div class="act">
-        <a class="go" href="dist/HMCS-0.1.1-amd64.deb">⬇ 下载 .deb</a>
+        <a class="go" href="dist/HMCS-0.1.2-amd64.deb">⬇ 下载 .deb</a>
       </div>
     </div>
 
     <div class="pane" data-pane="mac">
       <h3>macOS</h3>
-      <div class="ver">v0.1.1 · Apple Silicon / Intel</div>
+      <div class="ver">v0.1.2 · Intel x64 · macOS 11.0+</div>
       <ul>
-        <li>Universal 构建进行中</li>
-        <li>完成后本页与 Releases 同步发布</li>
-        <li>需要 macOS 12 及以上</li>
+        <li>解压得到 <code>HMCS.app</code>，拖进「应用程序」即可使用</li>
+        <li>未做苹果签名，首次打开会被 Gatekeeper 拦截，属正常现象</li>
+        <li>放行方式：终端执行 <code>xattr -cr HMCS.app</code>，或到「隐私与安全性」点「仍要打开」</li>
       </ul>
-      <div class="soon">即将推出 —— 可先关注 GitHub Releases 获取通知</div>
-      <div class="act" style="margin-top:12px"><a href="https://github.com/jaden175/hmcs/releases" target="_blank" rel="noopener">前往 Releases 页面</a></div>
+      <div class="file"><b>HMCS-0.1.2-mac-x64.zip</b><span>99 MB</span></div>
+      <div class="act">
+        <a class="go" href="https://github.com/jaden175/HMCS/releases/download/v0.1.2/HMCS-0.1.2-mac-x64.zip">⬇ 下载 macOS 版</a>
+        <a href="https://github.com/jaden175/HMCS/releases" target="_blank" rel="noopener">Releases 页面</a>
+      </div>
     </div>
 
     <div class="pane" data-pane="src">
       <h3>源码</h3>
-      <div class="ver">v0.1.1 · MIT License</div>
+      <div class="ver">v0.1.2 · MIT License</div>
       <ul>
         <li>Node.js 18+ 环境，<code>npm install &amp;&amp; npm start</code> 即可开发</li>
         <li>无遥测，界面全部本地渲染</li>
         <li>代码、图标、文案均为原创，未使用 PCL 任何素材</li>
       </ul>
-      <div class="file"><b>HMCS-0.1.1-source.zip</b><span>0.16 MB</span></div>
+      <div class="file"><b>HMCS-0.1.2-source.zip</b><span>0.16 MB</span></div>
       <div class="act">
-        <a class="go" href="dist/HMCS-0.1.1-source.zip">⬇ 下载源码</a>
+        <a class="go" href="dist/HMCS-0.1.2-source.zip">⬇ 下载源码</a>
         <a href="https://github.com/jaden175/hmcs" target="_blank" rel="noopener">GitHub 仓库</a>
       </div>
     </div>
@@ -312,11 +316,11 @@
     <p class="h2sub">所有文件均由同一份源码构建，版本号与校验信息可在 Releases 页面查看。</p>
     <table>
       <tr><th>平台</th><th>文件</th><th>大小</th><th>说明</th></tr>
-      <tr><td>Windows</td><td><code>HMCS-0.1.1-win.zip</code></td><td>219 MB</td><td>便携版，解压后运行 <code>install.cmd</code></td></tr>
+      <tr><td>Windows</td><td><code>HMCS-0.1.2-win.zip</code></td><td>219 MB</td><td>便携版，解压后运行 <code>install.cmd</code></td></tr>
       <tr><td>Windows</td><td><code>HMCS-setup-0.1.1.exe</code></td><td>约 220 MB</td><td>NSIS 安装包，可选安装目录（需在 Windows 上构建）</td></tr>
-      <tr><td>Linux</td><td><code>HMCS-0.1.1-amd64.deb</code></td><td>176 MB</td><td>Debian / Ubuntu 安装包</td></tr>
-      <tr><td>macOS</td><td>—</td><td>—</td><td>Universal 构建中</td></tr>
-      <tr><td>源码</td><td><code>HMCS-0.1.1-source.zip</code></td><td>0.16 MB</td><td>完整源码，MIT License</td></tr>
+      <tr><td>Linux</td><td><code>HMCS-0.1.2-amd64.deb</code></td><td>176 MB</td><td>Debian / Ubuntu 安装包</td></tr>
+      <tr><td>macOS</td><td><code>HMCS-0.1.2-mac-x64.zip</code></td><td>99 MB</td><td>Intel x64，解压后需 <code>xattr -cr HMCS.app</code> 放行</td></tr>
+      <tr><td>源码</td><td><code>HMCS-0.1.2-source.zip</code></td><td>0.16 MB</td><td>完整源码，MIT License</td></tr>
     </table>
   </div>
 </div>
@@ -330,7 +334,7 @@
         <div class="n">1</div>
         <h4>下载并解压</h4>
         <p>Windows 便携版解压到任意目录，无需管理员权限。</p>
-<pre>HMCS-0.1.1-win.zip → 解压 → install.cmd</pre>
+<pre>HMCS-0.1.2-win.zip → 解压 → install.cmd</pre>
       </div>
       <div class="s">
         <div class="n">2</div>
@@ -379,7 +383,7 @@
     </details>
     <details>
       <summary>Windows 下载后怎么安装？</summary>
-      <p>解压 <code>HMCS-0.1.1-win.zip</code>，双击目录内的 <code>install.cmd</code>，脚本会自动复制程序、创建桌面与开始菜单快捷方式并写入卸载信息。也可以直接运行目录里的 <code>hmcs-launcher.exe</code> 免安装使用。</p>
+      <p>解压 <code>HMCS-0.1.2-win.zip</code>，双击目录内的 <code>install.cmd</code>，脚本会自动复制程序、创建桌面与开始菜单快捷方式并写入卸载信息。也可以直接运行目录里的 <code>hmcs-launcher.exe</code> 免安装使用。</p>
     </details>
     <details>
       <summary>下载到一半断了怎么办？</summary>
@@ -394,6 +398,13 @@
       <p>启动器按官方清单全量支持，26.1 / 26.2 / 26.3 直接可选；26.4 目前只有快照，正式版发布后会自动出现在列表里，无需更新客户端。</p>
     </details>
     <details>
+      <summary>macOS 打开提示「无法验证开发者」怎么办？</summary>
+      <p>这是 Gatekeeper 对未签名应用的正常拦截，不是文件损坏。两种放行方式任选其一：</p>
+      <p><b>命令行（推荐）</b>：解压后打开「终端」，执行 <code>xattr -cr ~/Downloads/HMCS.app</code>（路径换成你实际解压的位置），之后再双击就能正常打开。</p>
+      <p><b>图形界面</b>：先在弹窗点「取消」，然后到「系统偏好设置 → 安全性与隐私」，页面底部会出现「仍要打开 HMCS」按钮，点击并输入密码确认。</p>
+      <p>当前提供的是 Intel（x64）构建，Apple Silicon 机器可通过 Rosetta 2 运行；Universal 构建后续发布。</p>
+    </details>
+    <details>
       <summary>用的是 PCL 的代码吗？</summary>
       <p>不是。界面只对齐操作习惯，所有代码、图标与文案均为本项目原创实现，未复制 PCL 任何源码或素材。</p>
     </details>
@@ -403,7 +414,7 @@
 <footer>
   <div class="in">
     <span>HMCS · Hallo Minecraft Space</span>
-    <span class="mono">v0.1.1</span>
+    <span class="mono">v0.1.2</span>
     <a href="https://github.com/jaden175/hmcs" target="_blank" rel="noopener">源码</a>
     <a href="https://github.com/jaden175/hmcs/releases" target="_blank" rel="noopener">Releases</a>
     <a href="https://github.com/jaden175/hmcs/issues" target="_blank" rel="noopener">问题反馈</a>
@@ -417,10 +428,10 @@
   // 平台标签切换 + 主按钮跟随
   (function () {
     var OS = {
-      win:   { href:'dist/HMCS-0.1.1-win.zip',   label:'下载 Windows 版', meta:'HMCS-0.1.1-win.zip · 219 MB' },
-      linux: { href:'dist/HMCS-0.1.1-amd64.deb', label:'下载 Linux 版',   meta:'HMCS-0.1.1-amd64.deb · 176 MB' },
+      win:   { href:'dist/HMCS-0.1.2-win.zip',   label:'下载 Windows 版', meta:'HMCS-0.1.2-win.zip · 219 MB' },
+      linux: { href:'dist/HMCS-0.1.2-amd64.deb', label:'下载 Linux 版',   meta:'HMCS-0.1.2-amd64.deb · 176 MB' },
       mac:   { href:'https://github.com/jaden175/hmcs/releases',                                        label:'前往 Releases',    meta:'macOS 版即将推出' },
-      src:   { href:'dist/HMCS-0.1.1-source.zip',label:'下载源码',       meta:'HMCS-0.1.1-source.zip · 0.16 MB' }
+      src:   { href:'dist/HMCS-0.1.2-source.zip',label:'下载源码',       meta:'HMCS-0.1.2-source.zip · 0.16 MB' }
     };
 
     var tabs = document.querySelectorAll('.tabs button');
