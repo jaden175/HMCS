@@ -45,7 +45,7 @@ const demoApi = {
   async listJava() { return [{ major: 17, full: 'openjdk version "17.0.2"', path: '/usr/lib/jvm/temurin-17' }]; },
   async downloadJava() { return { path: '/demo', major: 17 }; },
   async listMods() { return { dir: '~/.minecraft/mods', mods: [{ name: 'sodium-0.6.0.jar', size: 1048576 }] }; },
-  async searchMods(q, _v, _l, _pt, cat) {
+  async searchMods(q, _v, _l, _pt, cat, off = 0) {
     const all = [
       { slug: 'sodium', title: 'Sodium', author: 'jellysquid3', description: '现代渲染引擎，大幅提升帧率', downloads: 4800000, loader: 'fabric', iconUrl: '', cats: ['optimization'] },
       { slug: 'jei', title: 'JEI', author: 'mezz', description: 'Just Enough Items 物品查询', downloads: 3900000, loader: 'forge', iconUrl: '', cats: ['utility'] },
@@ -63,7 +63,8 @@ const demoApi = {
     let hits = all;
     if (q) hits = hits.filter((m) => (m.title + m.description).toLowerCase().includes(q.toLowerCase()));
     if (cat) hits = hits.filter((m) => m.cats.includes(cat));
-    return hits.map(({ cats, ...rest }) => rest);
+    const start = parseInt(off, 10) || 0;
+    return { hits: hits.slice(start, start + 40).map(({ cats, ...rest }) => rest), total: hits.length, offset: start, pageSize: 40 };
   },
   async installMod(_v, slug, _l, projectType) { return { name: slug + (projectType === 'mod' ? '.jar' : '.zip'), size: 1024, versionNumber: 'demo', dir: '~/demo' }; },
   async listContent(_v, kind) {
@@ -435,54 +436,88 @@ function currentLoader() {
   return 'any';
 }
 
+// 分页状态：Modrinth 上单个版本动辄上万条，必须翻页才能看全
+let modOffset = 0;
+let modTotal = 0;
+let modQuery = null; // 上一次搜索条件，翻页时复用
+
+function modResultItem(h, vid, loader) {
+  const li = document.createElement('li');
+  li.innerHTML =
+    (h.iconUrl ? `<img class="mod-icon" src="${h.iconUrl}" loading="lazy" onerror="this.remove()">` : '') +
+    `<span class="grow"><b>${h.title}</b> <span class="dim">by ${h.author}</span><br>` +
+    `<span class="dim small-text">${(h.description || '').slice(0, 60)}</span></span>` +
+    `<span class="tag">${h.loader || loader}</span>` +
+    `<span class="tag">${h.downloads >= 1e6 ? (h.downloads / 1e6).toFixed(1) + 'M' : (h.downloads / 1000).toFixed(0) + 'k'}</span>` +
+    `<button>安装</button>`;
+  li.querySelector('button').onclick = async (e) => {
+    e.stopPropagation();
+    const btn = e.target;
+    btn.textContent = '下载中…';
+    btn.disabled = true;
+    try {
+      const r = await api.installMod(vid, h.slug, $('#mod-loader').value === 'any' ? h.loader : $('#mod-loader').value);
+      btn.textContent = '已安装 ✓';
+      toast(`已安装 ${h.title} (${r.versionNumber})`);
+      renderMods();
+    } catch (err) {
+      btn.textContent = '安装';
+      btn.disabled = false;
+      toast('安装失败: ' + err.message);
+    }
+  };
+  return li;
+}
+
+function updateModMore() {
+  const wrap = $('#mod-more-wrap');
+  const shown = modOffset;
+  $('#mod-cat-hint').textContent =
+    (modQuery?.label || '') + ` · 共 ${modTotal.toLocaleString()} 个结果，已显示 ${shown} 个`;
+  wrap.classList.toggle('hidden', shown >= modTotal || !modTotal);
+}
+
 async function searchModsOnline(opts = {}) {
+  const append = !!opts.append;
   const vid = $('#mods-version').value || state.selectedVersion;
   if (!vid) return toast('请先在版本页安装游戏');
   const q = $('#mod-search').value.trim();
   const cat = modCat || '';
   const loader = $('#mod-loader').value;
+  const sort = $('#mod-sort')?.value || '';
   const list = $('#mod-results');
-  list.innerHTML = '<li class="dim">搜索中…</li>';
-  $('#mod-cat-hint').textContent = q
-    ? `“${q}” 的搜索结果`
-    : (CAT_NAMES[cat] || '热门模组') + ' · 按下载量排序';
+  if (!append) {
+    modOffset = 0;
+    modQuery = { q, cat, loader, sort, label: q ? `“${q}”` : (CAT_NAMES[cat] || '热门模组') };
+    list.innerHTML = '<li class="dim">搜索中…</li>';
+  }
+  const btnMore = $('#btn-mod-more');
+  if (btnMore) { btnMore.disabled = true; btnMore.textContent = '加载中…'; }
   try {
-    const hits = await api.searchMods(q, vid.replace(/-.*$/, ''), loader, 'mod', cat);
-    list.innerHTML = '';
-    if (!hits.length) { list.innerHTML = '<li class="dim">没有找到兼容的模组（试试换分类、loader 或关键词）</li>'; return; }
-    hits.forEach((h) => {
-      const li = document.createElement('li');
-      li.innerHTML =
-        (h.iconUrl ? `<img class="mod-icon" src="${h.iconUrl}" loading="lazy" onerror="this.remove()">` : '') +
-        `<span class="grow"><b>${h.title}</b> <span class="dim">by ${h.author}</span><br>` +
-        `<span class="dim small-text">${(h.description || '').slice(0, 60)}</span></span>` +
-        `<span class="tag">${h.loader || loader}</span>` +
-        `<span class="tag">${h.downloads >= 1e6 ? (h.downloads / 1e6).toFixed(1) + 'M' : (h.downloads / 1000).toFixed(0) + 'k'}</span>` +
-        `<button>安装</button>`;
-      li.querySelector('button').onclick = async (e) => {
-        e.stopPropagation();
-        const btn = e.target;
-        btn.textContent = '下载中…';
-        btn.disabled = true;
-        try {
-          const r = await api.installMod(vid, h.slug, $('#mod-loader').value === 'any' ? h.loader : $('#mod-loader').value);
-          btn.textContent = '已安装 ✓';
-          toast(`已安装 ${h.title} (${r.versionNumber})`);
-          renderMods();
-        } catch (err) {
-          btn.textContent = '安装';
-          btn.disabled = false;
-          toast('安装失败: ' + err.message);
-        }
-      };
-      list.appendChild(li);
-    });
+    const r = await api.searchMods(q, vid.replace(/-.*$/, ''), loader, 'mod', cat, modOffset, sort);
+    const hits = r.hits || [];
+    modTotal = r.total ?? hits.length;
+    if (!append) list.innerHTML = '';
+    else if (!hits.length) { toast('没有更多了'); }
+    if (!append && !hits.length) {
+      list.innerHTML = '<li class="dim">没有找到兼容的模组（试试换分类、loader 或关键词）</li>';
+      updateModMore();
+      return;
+    }
+    hits.forEach((h) => list.appendChild(modResultItem(h, vid, loader)));
+    modOffset += hits.length;
+    updateModMore();
   } catch (e) {
-    list.innerHTML = `<li class="dim">搜索失败: ${e.message}</li>`;
+    if (!append) list.innerHTML = `<li class="dim">搜索失败: ${e.message}</li>`;
+    else toast('加载失败: ' + e.message);
+  } finally {
+    if (btnMore) { btnMore.disabled = false; btnMore.textContent = '加载更多'; }
   }
 }
-$('#btn-mod-search').onclick = searchModsOnline;
+$('#btn-mod-search').onclick = () => searchModsOnline();
 $('#mod-search').addEventListener('keydown', (e) => { if (e.key === 'Enter') searchModsOnline(); });
+$('#mod-sort').onchange = () => searchModsOnline();
+$('#btn-mod-more').onclick = () => searchModsOnline({ append: true });
 
 // 分类筛选 + 热门推荐
 const CAT_NAMES = {
@@ -576,7 +611,7 @@ async function searchResOnline() {
   const list = $('#res-results');
   list.innerHTML = '<li class="dim">搜索中…</li>';
   try {
-    const hits = await api.searchMods(q, vid.replace(/-.*$/, ''), 'any', RES_PROJECT_TYPE[resKind]);
+    const { hits } = await api.searchMods(q, vid.replace(/-.*$/, ''), 'any', RES_PROJECT_TYPE[resKind]);
     list.innerHTML = '';
     if (!hits.length) { list.innerHTML = '<li class="dim">没有找到兼容的资源</li>'; return; }
     hits.forEach((h) => {
@@ -817,6 +852,81 @@ $('#btn-java-dl').onclick = async () => {
     toast('Java 下载失败: ' + e.message);
   }
 };
+
+// ---------- 拖拽导入 ----------
+// 拖进来的东西可能是：.mrpack 整合包、含 mods/ 的 zip 散包、.jar 模组、资源包/光影 zip
+// Electron 32+ 取不到 File.path，必须让 preload 用 webUtils 换真实路径
+let dragDepth = 0;
+
+function hasFiles(e) {
+  return [...(e.dataTransfer?.types || [])].includes('Files');
+}
+
+window.addEventListener('dragenter', (e) => {
+  if (!hasFiles(e)) return;
+  e.preventDefault();
+  dragDepth++;
+  $('#drop-overlay').classList.remove('hidden');
+  document.body.classList.add('dragging');
+});
+window.addEventListener('dragover', (e) => {
+  if (!hasFiles(e)) return;
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'copy';
+});
+window.addEventListener('dragleave', (e) => {
+  if (!hasFiles(e)) return;
+  dragDepth = Math.max(0, dragDepth - 1);
+  if (dragDepth === 0) {
+    $('#drop-overlay').classList.add('hidden');
+    document.body.classList.remove('dragging');
+  }
+});
+window.addEventListener('drop', async (e) => {
+  if (!hasFiles(e)) return;
+  e.preventDefault();
+  dragDepth = 0;
+  $('#drop-overlay').classList.add('hidden');
+  document.body.classList.remove('dragging');
+
+  const files = [...(e.dataTransfer?.files || [])];
+  if (!files.length) return;
+  if (!api.resolveDropPaths) {
+    toast('当前运行环境不支持拖拽导入（浏览器预览模式）');
+    return;
+  }
+  const paths = api.resolveDropPaths(files);
+  if (!paths.length) return toast('读不到文件路径，请改用「导入」按钮选择文件');
+
+  const vid = state.selectedVersion || state.installed[0] || null;
+  toast(`正在处理 ${paths.length} 个文件…`);
+  $$('.nav').find((b) => b.dataset.page === 'logs')?.classList.add('active');
+  try {
+    const results = await api.dropImport(vid, paths);
+    const installedPacks = results.filter((r) => r.ok && r.kind === 'modpack');
+    if (installedPacks.length) {
+      state.installed = await api.installedVersions();
+      state.selectedVersion = installedPacks[0].versionId;
+      await refreshHome();
+      renderVersionList();
+      fillModsVersions();
+    }
+    renderMods();
+    // 汇总结果：全成功只报成功，有失败就逐条说明
+    const bad = results.filter((r) => !r.ok);
+    if (!bad.length) {
+      toast(results.map((r) => r.message).join('；').slice(0, 120) || '导入完成');
+    } else {
+      toast(bad[0].message.slice(0, 120));
+      for (const b of bad) {
+        const box = $('#log-box');
+        box.textContent += `[drop] ${b.file}: ${b.message}\n`;
+      }
+    }
+  } catch (err) {
+    toast('导入失败: ' + err.message);
+  }
+});
 
 // ---------- 启动 ----------
 buildThemeUI();

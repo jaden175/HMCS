@@ -39,9 +39,22 @@ contextBridge.exposeInMainWorld('hmcs', {
   listMods: (versionId) => ipcRenderer.invoke('mods:list', versionId),
   removeMod: (versionId, name) => ipcRenderer.invoke('mods:remove', versionId, name),
   openModsDir: (versionId) => ipcRenderer.invoke('mods:open', versionId),
-  searchMods: (query, mcVersion, loader, projectType, category) => ipcRenderer.invoke('mods:search', query, mcVersion, loader, projectType, category),
+  searchMods: (query, mcVersion, loader, projectType, category, offset, sort) => ipcRenderer.invoke('mods:search', query, mcVersion, loader, projectType, category, offset, sort),
   installMod: (versionId, slug, loader, projectType) => ipcRenderer.invoke('mods:install', versionId, slug, loader, projectType),
   importContent: (versionId, kind) => ipcRenderer.invoke('content:import', versionId, kind),
+  // 拖拽：Electron 32+ 取 File 真实路径必须走 webUtils
+  resolveDropPaths: (files) => {
+    const paths = [];
+    for (const f of files || []) {
+      try {
+        const p = require('electron').webUtils.getPathForFile(f);
+        if (p) paths.push(p);
+      } catch (e) { /* 跳过取不到路径的项 */ }
+    }
+    return paths;
+  },
+  dropImport: (versionId, paths) => ipcRenderer.invoke('content:drop', versionId, paths),
+  classifyDrop: (paths) => ipcRenderer.invoke('content:classify', paths),
   checkUpdate: () => ipcRenderer.invoke('updater:check'),
   downloadUpdate: (info) => ipcRenderer.invoke('updater:download', info),
   localUpdate: () => ipcRenderer.invoke('updater:local'),

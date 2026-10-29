@@ -1,0 +1,6 @@
+{
+  "version": "0.1.3",
+  "asarUrl": "https://github.com/jaden175/HMCS/releases/download/v0.1.3/app.asar",
+  "sha256": "9d725735fef2f9bd9e7429684b30b5acdfb836aa009f503f6edbaa86ebf2d983",
+  "notes": "HMCS 0.1.3 · 整合包拖拽导入（.mrpack 自动装实例）；模组分页 + 排序；安装包体积大幅缩小"
+}

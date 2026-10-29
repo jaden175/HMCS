@@ -145,6 +145,13 @@
               <option value="forge">Forge</option>
               <option value="neoforge">NeoForge</option>
             </select>
+            <select id="mod-sort">
+              <option value="">按下载量</option>
+              <option value="relevance">相关度</option>
+              <option value="follows">关注数</option>
+              <option value="newest">最新发布</option>
+              <option value="updated">最近更新</option>
+            </select>
             <button id="btn-mod-search">搜索</button>
           </div>
           <div class="seg" id="mod-cats" style="margin:10px 0 4px;flex-wrap:wrap">
@@ -161,6 +168,9 @@
           </div>
           <div id="mod-cat-hint" class="dim small-text">热门模组 · 按下载量排序</div>
           <ul id="mod-results" class="list cards"></ul>
+          <div id="mod-more-wrap" class="hidden" style="text-align:center;margin-top:10px">
+            <button id="btn-mod-more">加载更多</button>
+          </div>
         </div>
 
         <h3 class="section-label">已安装的模组</h3>
@@ -338,6 +348,19 @@
   </div>
 
   <div id="toast" class="hidden" data-page-node-id="9qQE9CXi0rxQ9glCrYYYcy"></div>
+
+  <!-- 拖拽导入遮罩 -->
+  <div id="drop-overlay" class="hidden">
+    <div class="drop-box">
+      <div class="drop-icon">⬇</div>
+      <b>松手即可导入</b>
+      <div class="dim small-text">
+        整合包 .mrpack / .zip → 自动装成新版本<br>
+        .jar 模组 → 放进当前版本的 mods<br>
+        资源包 / 光影 .zip → 放进对应目录
+      </div>
+    </div>
+  </div>
   <script src="app.js"></script>
 </body>
 </html>

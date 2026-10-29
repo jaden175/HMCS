@@ -61,16 +61,21 @@ function removeMod(versionId, name) { return removeContent(versionId, 'mods', na
 
 // ---------- Modrinth 在线搜索 ----------
 // projectType: mod / resourcepack / shader；category: Modrinth 分类（optimization/technology/magic/...，空 = 不限）
-async function searchContent(query, mcVersion, loader, projectType = 'mod', category = '') {
+// offset/sort 支持分页与排序：一个版本下 Modrinth 常有上万条结果，必须能翻页
+const PAGE_SIZE = 40;
+
+async function searchContent(query, mcVersion, loader, projectType = 'mod', category = '', offset = 0, sort = '') {
   const facets = [[`project_type:${projectType}`], [`versions:${mcVersion}`]];
   if (loader && loader !== 'any' && projectType === 'mod') facets.push([`categories:${loader}`]);
   if (category) facets.push([`categories:${category}`]);
-  const limit = query ? 40 : 30;
-  const url = `${MODRINTH_API}/search?limit=${limit}&index=downloads&query=${encodeURIComponent(query || '')}&facets=${encodeURIComponent(JSON.stringify(facets))}`;
+  const index = sort || (query ? 'relevance' : 'downloads');
+  const url = `${MODRINTH_API}/search?limit=${PAGE_SIZE}&offset=${Math.max(0, parseInt(offset, 10) || 0)}` +
+    `&index=${encodeURIComponent(index)}&query=${encodeURIComponent(query || '')}` +
+    `&facets=${encodeURIComponent(JSON.stringify(facets))}`;
   const res = await fetchWithRetry(url);
   if (!res.ok) throw new Error(`Modrinth 搜索失败: HTTP ${res.status}`);
   const data = await res.json();
-  return (data.hits || []).map((h) => ({
+  const hits = (data.hits || []).map((h) => ({
     projectId: h.project_id,
     slug: h.slug,
     title: h.title,
@@ -80,6 +85,7 @@ async function searchContent(query, mcVersion, loader, projectType = 'mod', cate
     iconUrl: h.icon_url || '',
     loader: h.display_categories?.find((c) => ['fabric', 'forge', 'neoforge', 'quilt'].includes(c)) || ''
   }));
+  return { hits, total: data.total_hits || hits.length, offset: Math.max(0, parseInt(offset, 10) || 0), pageSize: PAGE_SIZE };
 }
 
 function mcVersionOf(versionId) {

@@ -120,11 +120,28 @@ ipcMain.handle('mods:open', async (_e, versionId) => {
   require('fs').mkdirSync(dir, { recursive: true });
   return shell.openPath(dir);
 });
-ipcMain.handle('mods:search', (_e, query, mcVersion, loader, projectType, category) => searchContent(query, mcVersion, loader, projectType || 'mod', category || ''));
+ipcMain.handle('mods:search', (_e, query, mcVersion, loader, projectType, category, offset, sort) =>
+  searchContent(query, mcVersion, loader, projectType || 'mod', category || '', offset || 0, sort || ''));
 ipcMain.handle('mods:install', (_e, versionId, slug, loader, projectType) =>
   installContent(versionId, slug, loader, projectType || 'mod', (p) => sendProgress('download', p))
 );
 ipcMain.handle('content:list', (_e, versionId, kind) => listContent(versionId, kind));
+// 拖拽导入：整合包 / 模组 / 资源包统一入口
+ipcMain.handle('content:drop', async (_e, versionId, paths) => {
+  const { importDropped } = require('./src/core/modpack');
+  return importDropped(paths, versionId, {
+    onProgress: (p) => sendProgress('download', p),
+    onLog: sendLog
+  });
+});
+// 只做识别，不落地（拖入时先给用户预览要做什么）
+ipcMain.handle('content:classify', (_e, paths) => {
+  const { classify } = require('./src/core/modpack');
+  return (paths || []).map((p) => {
+    try { return { path: p, name: require('path').basename(p), kind: classify(p) }; }
+    catch (e) { return { path: p, name: require('path').basename(p), kind: 'unknown', error: e.message }; }
+  });
+});
 ipcMain.handle('content:remove', (_e, versionId, kind, name) => removeContent(versionId, kind, name));
 ipcMain.handle('content:open', async (_e, versionId, kind) => {
   const { shell } = require('electron');

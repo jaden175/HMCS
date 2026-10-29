@@ -246,3 +246,42 @@ button.ghost:hover { color: var(--accent); background: var(--accent-soft); }
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--fg-dim); }
+
+/* ---------- 拖拽导入遮罩 ---------- */
+#drop-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+#drop-overlay.hidden { display: none; }
+#drop-overlay .drop-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 34px 44px;
+  border: 2px dashed var(--accent);
+  border-radius: 16px;
+  background: var(--panel);
+  box-shadow: var(--shadow);
+  text-align: center;
+  animation: dropPulse 1.6s ease-in-out infinite;
+}
+#drop-overlay .drop-icon {
+  font-size: 30px;
+  color: var(--accent);
+  line-height: 1;
+}
+#drop-overlay b { font-size: 16px; }
+@keyframes dropPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.015); }
+}
+/* 拖拽时不让子元素抢事件 */
+body.dragging .page, body.dragging .drop-zone { pointer-events: none; }

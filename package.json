@@ -1,7 +1,7 @@
 {
   "name": "hmcs-launcher",
   "productName": "HMCS",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "description": "HMCS - Hallo Minecraft Space",
   "main": "main.js",
   "scripts": {
@@ -31,6 +31,19 @@
     "directories": {
       "output": "dist"
     },
+    "files": [
+      "**/*",
+      "!dist",
+      "!dist-*",
+      "!.npm-cache",
+      "!.git",
+      "!.workbuddy",
+      "!build7.log",
+      "!itch-发布包",
+      "!*.md",
+      "!tests",
+      "!tools/gen_*.py"
+    ],
     "win": {
       "target": [
         {
